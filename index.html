@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Oceanix — Treat Your Favourite Creators</title>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -974,22 +975,51 @@ window.confirmTreat = async () => {
   if (!selectedTreatData) { showToast('Please select a treat tier!'); return; }
   if (!currentUser) { showToast('Please sign in!'); return; }
   const message = document.getElementById('modalMessage').value.trim();
-  const btn = document.getElementById('modalSendBtn');
-  btn.textContent = 'Sending...';
-  try {
-    await addDoc(collection(db, 'treats'), {
-      userId: currentUser.uid, userName: currentUser.displayName,
-      toCreatorUid: selectedCreatorUid, treatName: selectedTreatData.name,
-      emoji: selectedTreatData.emoji, amount: selectedTreatData.amount,
-      message: message, createdAt: serverTimestamp()
-    });
-    closeModal();
-    showToast(selectedTreatData.emoji + ' Treat sent! ₹' + selectedTreatData.amount + ' 🎉');
-    await loadUserTreats(currentUser.uid);
-  } catch(e) {
-    showToast('Error sending treat.');
-    btn.textContent = 'Send Treat 🎁';
-  }
+ 
+  const options = {
+    key: 'rzp_test_SkyblketyFraQF',
+    amount: selectedTreatData.amount * 100, // paise
+    currency: 'INR',
+    name: 'Oceanix',
+    description: selectedTreatData.name + ' for ' + document.getElementById('modalCreatorName').textContent,
+    image: 'https://oceanix.vercel.app/favicon.ico',
+    handler: async function(response) {
+      // Payment successful - save to Firestore
+      try {
+        await addDoc(collection(db, 'treats'), {
+          userId: currentUser.uid,
+          userName: currentUser.displayName,
+          toCreatorUid: selectedCreatorUid,
+          treatName: selectedTreatData.name,
+          emoji: selectedTreatData.emoji,
+          amount: selectedTreatData.amount,
+          message: message,
+          razorpayPaymentId: response.razorpay_payment_id,
+          createdAt: serverTimestamp()
+        });
+        closeModal();
+        showToast(selectedTreatData.emoji + ' Treat sent! ₹' + selectedTreatData.amount + ' 🎉');
+        await loadUserTreats(currentUser.uid);
+      } catch(e) {
+        showToast('Payment done but save failed. Contact support.');
+      }
+    },
+    prefill: {
+      name: currentUser.displayName || '',
+      email: currentUser.email || ''
+    },
+    theme: { color: '#4a90d9' },
+    modal: {
+      ondismiss: function() {
+        showToast('Payment cancelled.');
+        document.getElementById('modalSendBtn').textContent = 'Send ' + selectedTreatData.emoji + ' ₹' + selectedTreatData.amount;
+      }
+    }
+  };
+ 
+  closeModal();
+  const rzp = new Razorpay(options);
+  rzp.open();
 };
  
 // SEND MESSAGE
