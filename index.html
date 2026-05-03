@@ -926,6 +926,7 @@ function go(id,idx){
   setTimeout(()=>document.getElementById('p-'+id).classList.add('show'),60);
   document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
   document.querySelectorAll('.mob-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+  if(id==='browse' && window._loadCreators) window._loadCreators();
 }
 function showToast(msg){
   const t=document.getElementById('toast');
