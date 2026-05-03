@@ -744,6 +744,8 @@ onAuthStateChanged(auth, async (user) => {
       updateUI(user, data);
       await loadUserTreats(user.uid);
       await loadCreators();
+      // Pre-load browse page
+      renderCreators(allCreators);
     }
   } else {
     currentUser = null;
@@ -926,7 +928,15 @@ function go(id,idx){
   setTimeout(()=>document.getElementById('p-'+id).classList.add('show'),60);
   document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
   document.querySelectorAll('.mob-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
-  if(id==='browse' && window._loadCreators) window._loadCreators();
+  if(id==='browse'){
+    // Retry until Firebase is ready
+    let tries = 0;
+    const tryLoad = setInterval(()=>{
+      tries++;
+      if(window._loadCreators){ clearInterval(tryLoad); window._loadCreators(); }
+      if(tries > 20) clearInterval(tryLoad);
+    }, 500);
+  }
 }
 function showToast(msg){
   const t=document.getElementById('toast');
