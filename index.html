@@ -882,6 +882,116 @@ async function loadUserTreats(uid) {
   } catch(e) { console.log('Load error:', e); }
 }
  
+// LOAD CREATORS
+let allCreators = [];
+let selectedCreatorUid = null;
+let selectedTreatData = null;
+ 
+window._loadCreators = async function() {
+  try {
+    const snap = await getDocs(collection(db, 'creators'));
+    allCreators = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderCreators(allCreators);
+    renderHomeCards(allCreators);
+  } catch(e) {
+    console.log('Load creators error:', e);
+    const grid = document.getElementById('creatorGrid');
+    if(grid) grid.innerHTML = '<div class="no-creators"><span class="no-creators-emoji">⚠️</span>Error loading. Please refresh.</div>';
+  }
+};
+ 
+function renderCreators(creators) {
+  const grid = document.getElementById('creatorGrid');
+  if (!grid) return;
+  const catEmojis = {Tech:'💻',Gaming:'🎮',Finance:'📈',Art:'🎨',Music:'🎵',Comedy:'😂',Education:'📚',Fitness:'💪',Food:'🍳',Podcast:'🎙️',Other:'✨'};
+  if (!creators || creators.length === 0) {
+    grid.innerHTML = '<div class="no-creators"><span class="no-creators-emoji">🎙️</span>No creators yet!<br>Be the first to join as a Creator!</div>';
+    return;
+  }
+  grid.innerHTML = creators.map(c => `
+    <div class="creator-card" onclick="openTreatModal('${c.id}','${(c.name||'').replace(/'/g,"\\'")}','${c.category||''}','${c.photo||''}')">
+      <div class="creator-av">${c.photo ? `<img src="${c.photo}" alt="">` : (catEmojis[c.category]||'🎙️')}</div>
+      <div class="creator-name">${c.name||'Creator'}</div>
+      <span class="creator-cat">${catEmojis[c.category]||'✨'} ${c.category||'Creator'}</span>
+      <p class="creator-bio">${c.bio||'Creating amazing content for you!'}</p>
+      <button class="creator-treat-btn">Send a Treat 🎁</button>
+    </div>
+  `).join('');
+}
+ 
+function renderHomeCards(creators) {
+  const cards = document.getElementById('homeCreatorCards');
+  if (!cards) return;
+  const gradients = ['linear-gradient(135deg,#667eea,#764ba2)','linear-gradient(135deg,#f093fb,#f5576c)','linear-gradient(135deg,#43e97b,#38f9d7)','linear-gradient(135deg,#4facfe,#00f2fe)'];
+  const catEmojis = {Tech:'💻',Gaming:'🎮',Finance:'📈',Art:'🎨',Music:'🎵',Comedy:'😂',Education:'📚',Fitness:'💪',Food:'🍳',Podcast:'🎙️',Other:'✨'};
+  if (!creators || creators.length === 0) {
+    cards.innerHTML = '<div class="ccard"><div class="cav" style="background:linear-gradient(135deg,#667eea,#764ba2)">🎙️</div><div><span class="cn">No creators yet</span><span class="cc">Be the first!</span></div></div>';
+    return;
+  }
+  cards.innerHTML = creators.slice(0,4).map((c,i) => `
+    <div class="ccard" onclick="openTreatModal('${c.id}','${(c.name||'').replace(/'/g,"\\'")}','${c.category||''}','${c.photo||''}')">
+      <div class="cav" style="background:${gradients[i%4]}">${c.photo ? `<img src="${c.photo}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">` : (catEmojis[c.category]||'🎙️')}</div>
+      <div><span class="cn">${c.name||'Creator'}</span><span class="cc">${c.category||'Creator'}</span></div>
+      <span class="ca">₹29+</span>
+    </div>
+  `).join('');
+}
+ 
+window.filterCreators = (cat) => {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderCreators(cat === 'all' ? allCreators : allCreators.filter(c => c.category === cat));
+};
+ 
+window.openTreatModal = (uid, name, category, photo) => {
+  if (!currentUser) { showToast('Please sign in first!'); return; }
+  selectedCreatorUid = uid;
+  selectedTreatData = null;
+  document.getElementById('modalCreatorName').textContent = name;
+  document.getElementById('modalCreatorCat').textContent = category;
+  const av = document.getElementById('modalCreatorAv');
+  av.innerHTML = photo ? `<img src="${photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">` : '🎙️';
+  document.querySelectorAll('.modal-tier').forEach(t => t.classList.remove('selected'));
+  document.getElementById('modalMessage').value = '';
+  document.getElementById('modalSendBtn').textContent = 'Send Treat 🎁';
+  document.getElementById('treatModal').classList.add('show');
+};
+ 
+window.selectModalTier = (el, name, emoji, amount) => {
+  document.querySelectorAll('.modal-tier').forEach(t => t.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedTreatData = { name, emoji, amount };
+  document.getElementById('modalSendBtn').textContent = `Send ${emoji} ₹${amount}`;
+};
+ 
+window.closeModal = () => {
+  document.getElementById('treatModal').classList.remove('show');
+  selectedCreatorUid = null;
+  selectedTreatData = null;
+};
+ 
+window.confirmTreat = async () => {
+  if (!selectedTreatData) { showToast('Please select a treat tier!'); return; }
+  if (!currentUser) { showToast('Please sign in!'); return; }
+  const message = document.getElementById('modalMessage').value.trim();
+  const btn = document.getElementById('modalSendBtn');
+  btn.textContent = 'Sending...';
+  try {
+    await addDoc(collection(db, 'treats'), {
+      userId: currentUser.uid, userName: currentUser.displayName,
+      toCreatorUid: selectedCreatorUid, treatName: selectedTreatData.name,
+      emoji: selectedTreatData.emoji, amount: selectedTreatData.amount,
+      message: message, createdAt: serverTimestamp()
+    });
+    closeModal();
+    showToast(selectedTreatData.emoji + ' Treat sent! ₹' + selectedTreatData.amount + ' 🎉');
+    await loadUserTreats(currentUser.uid);
+  } catch(e) {
+    showToast('Error sending treat.');
+    btn.textContent = 'Send Treat 🎁';
+  }
+};
+ 
 // SEND MESSAGE
 window._sendMessage = async () => {
   const input = document.getElementById('chatInput');
