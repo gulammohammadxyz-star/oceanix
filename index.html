@@ -696,7 +696,7 @@ window.confirmRole = async () => {
 };
  
 // CREATOR SETUP
-window.saveCreatorProfile = async () => {
+window._saveCreatorProfile = async () => {
   const name = document.getElementById('setupName').value.trim();
   const username = document.getElementById('setupUsername').value.trim().toLowerCase().replace(/[^a-z0-9_]/g,'');
   const category = document.getElementById('setupCategory').value;
@@ -822,7 +822,7 @@ function sendTreat(n,e,a){ if(window._sendTreat) window._sendTreat(n,e,a); else 
 function sendMessage(){ if(window._sendMessage) window._sendMessage(); }
 function selectRole(r){ if(window.selectRole) window.selectRole(r); }
 function confirmRole(){ if(window.confirmRole) window.confirmRole(); }
-function saveCreatorProfile(){ if(window.saveCreatorProfile) window.saveCreatorProfile(); }
+function saveCreatorProfile(){ if(window._saveCreatorProfile) window._saveCreatorProfile(); }
 </script>
 </body>
 </html>
