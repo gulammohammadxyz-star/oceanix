@@ -1011,8 +1011,8 @@ window.confirmTreat = async () => {
     await loadUserTreats(currentUser.uid);
  
   } catch(e) {
-    console.log('Payment error:', e);
-    showToast('Something went wrong. Try again!');
+    console.log('Payment error full:', e.message, e.code, e);
+    showToast('Error: ' + (e.message || 'Try again!'));
   }
 };
  
