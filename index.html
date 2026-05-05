@@ -915,7 +915,7 @@ function renderCreators(creators) {
       <div class="creator-name">${c.name||'Creator'}</div>
       <span class="creator-cat">${catEmojis[c.category]||'✨'} ${c.category||'Creator'}</span>
       <p class="creator-bio">${c.bio||'Creating amazing content for you!'}</p>
-      <button class="creator-treat-btn">Send a Treat 🎁</button>
+      <button class="creator-treat-btn" onclick="event.stopPropagation();openTreatModal('${c.id}','${(c.name||'').replace(/'/g,\"\\'\");}','${c.category||''}','${c.photo||''}')">Send a Treat 🎁</button>
     </div>
   `).join('');
 }
