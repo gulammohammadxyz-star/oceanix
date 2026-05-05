@@ -976,50 +976,44 @@ window.confirmTreat = async () => {
   if (!currentUser) { showToast('Please sign in!'); return; }
   const message = document.getElementById('modalMessage').value.trim();
  
-  const options = {
-    key: 'rzp_test_SkyblketyFraQF',
-    amount: selectedTreatData.amount * 100, // paise
-    currency: 'INR',
-    name: 'Oceanix',
-    description: selectedTreatData.name + ' for ' + document.getElementById('modalCreatorName').textContent,
-    image: 'https://oceanix.vercel.app/favicon.ico',
-    handler: async function(response) {
-      // Payment successful - save to Firestore
-      try {
-        await addDoc(collection(db, 'treats'), {
-          userId: currentUser.uid,
-          userName: currentUser.displayName,
-          toCreatorUid: selectedCreatorUid,
-          treatName: selectedTreatData.name,
-          emoji: selectedTreatData.emoji,
-          amount: selectedTreatData.amount,
-          message: message,
-          razorpayPaymentId: response.razorpay_payment_id,
-          createdAt: serverTimestamp()
-        });
-        closeModal();
-        showToast(selectedTreatData.emoji + ' Treat sent! ₹' + selectedTreatData.amount + ' 🎉');
-        await loadUserTreats(currentUser.uid);
-      } catch(e) {
-        showToast('Payment done but save failed. Contact support.');
-      }
-    },
-    prefill: {
-      name: currentUser.displayName || '',
-      email: currentUser.email || ''
-    },
-    theme: { color: '#4a90d9' },
-    modal: {
-      ondismiss: function() {
-        showToast('Payment cancelled.');
-        document.getElementById('modalSendBtn').textContent = 'Send ' + selectedTreatData.emoji + ' ₹' + selectedTreatData.amount;
-      }
-    }
-  };
+  // Get creator's payment link from Firestore
+  try {
+    const creatorSnap = await getDoc(doc(db, 'creators', selectedCreatorUid));
+    const creatorData = creatorSnap.data();
+    const paymentLink = creatorData?.paymentLink;
  
-  closeModal();
-  const rzp = new Razorpay(options);
-  rzp.open();
+    if (!paymentLink) {
+      showToast('Creator has not set up payments yet!');
+      return;
+    }
+ 
+    // Save treat to Firestore first
+    await addDoc(collection(db, 'treats'), {
+      userId: currentUser.uid,
+      userName: currentUser.displayName,
+      toCreatorUid: selectedCreatorUid,
+      treatName: selectedTreatData.name,
+      emoji: selectedTreatData.emoji,
+      amount: selectedTreatData.amount,
+      message: message,
+      status: 'pending',
+      createdAt: serverTimestamp()
+    });
+ 
+    closeModal();
+    showToast(selectedTreatData.emoji + ' Redirecting to payment... 💳');
+    
+    // Open Razorpay payment link in new tab
+    setTimeout(() => {
+      window.open(paymentLink, '_blank');
+    }, 800);
+ 
+    await loadUserTreats(currentUser.uid);
+ 
+  } catch(e) {
+    console.log('Payment error:', e);
+    showToast('Something went wrong. Try again!');
+  }
 };
  
 // SEND MESSAGE
