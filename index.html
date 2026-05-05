@@ -972,7 +972,8 @@ window.closeModal = () => {
 };
  
 window.confirmTreat = async () => {
-  if (!selectedTreatData) { showToast('Please select a treat tier!'); return; }
+  if (!selectedTreatData) { showToast('👆 Please select a treat tier first!'); return; }
+  if (!selectedCreatorUid) { showToast('No creator selected!'); return; }
   if (!currentUser) { showToast('Please sign in!'); return; }
   const message = document.getElementById('modalMessage').value.trim();
  
@@ -1087,4 +1088,3 @@ function saveCreatorProfile(){ if(window._saveCreatorProfile) window._saveCreato
 </script>
 </body>
 </html>
- 
