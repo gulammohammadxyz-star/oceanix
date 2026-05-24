@@ -745,7 +745,6 @@ onAuthStateChanged(auth, async (user) => {
       updateUI(user, data);
       await loadUserTreats(user.uid);
       await loadCreators();
-      // Pre-load browse page
       renderCreators(allCreators);
     }
   } else {
@@ -767,7 +766,7 @@ window._signInWithGoogle = async () => {
   } catch(e) {
     showToast('Sign in failed. Try again.');
     btn.disabled = false;
-    btn.innerHTML = 'Continue with Google';
+    btn.innerHTML = '<svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg> Continue with Google';
   }
 };
  
@@ -872,7 +871,6 @@ async function loadUserTreats(uid) {
         return `<div class="hrow"><div class="hav" style="background:linear-gradient(135deg,#667eea,#764ba2)">${t.emoji}</div><div><span class="hn">${t.treatName}</span><span class="ht-s">${time}</span></div><span class="hamt">${t.emoji} ₹${t.amount}</span><span class="hbdg">Sent</span></div>`;
       }).join('');
     }
-    // Update treat feed on profile
     const feed = document.getElementById('treatFeed');
     if (treats.length > 0) {
       feed.innerHTML = treats.slice(0,3).map(t => {
@@ -900,6 +898,10 @@ window._loadCreators = async function() {
     if(grid) grid.innerHTML = '<div class="no-creators"><span class="no-creators-emoji">⚠️</span>Error loading. Please refresh.</div>';
   }
 };
+
+async function loadCreators() {
+  return window._loadCreators();
+}
  
 function renderCreators(creators) {
   const grid = document.getElementById('creatorGrid');
@@ -909,15 +911,18 @@ function renderCreators(creators) {
     grid.innerHTML = '<div class="no-creators"><span class="no-creators-emoji">🎙️</span>No creators yet!<br>Be the first to join as a Creator!</div>';
     return;
   }
-  grid.innerHTML = creators.map(c => `
-    <div class="creator-card" onclick="openTreatModal('${c.id}','${(c.name||'').replace(/'/g,"\\'")}','${c.category||''}','${c.photo||''}')">
+  grid.innerHTML = creators.map(c => {
+    const safeName = (c.name||'').replace(/'/g,"\\'");
+    const safePhoto = (c.photo||'');
+    return `
+    <div class="creator-card" onclick="openTreatModal('${c.id}','${safeName}','${c.category||''}','${safePhoto}')">
       <div class="creator-av">${c.photo ? `<img src="${c.photo}" alt="">` : (catEmojis[c.category]||'🎙️')}</div>
       <div class="creator-name">${c.name||'Creator'}</div>
       <span class="creator-cat">${catEmojis[c.category]||'✨'} ${c.category||'Creator'}</span>
       <p class="creator-bio">${c.bio||'Creating amazing content for you!'}</p>
-      <button class="creator-treat-btn" onclick="event.stopPropagation();openTreatModal('${c.id}','${(c.name||'').replace(/'/g,\"\\'\");}','${c.category||''}','${c.photo||''}')">Send a Treat 🎁</button>
-    </div>
-  `).join('');
+      <button class="creator-treat-btn" onclick="event.stopPropagation();openTreatModal('${c.id}','${safeName}','${c.category||''}','${safePhoto}')">Send a Treat 🎁</button>
+    </div>`;
+  }).join('');
 }
  
 function renderHomeCards(creators) {
@@ -929,13 +934,15 @@ function renderHomeCards(creators) {
     cards.innerHTML = '<div class="ccard"><div class="cav" style="background:linear-gradient(135deg,#667eea,#764ba2)">🎙️</div><div><span class="cn">No creators yet</span><span class="cc">Be the first!</span></div></div>';
     return;
   }
-  cards.innerHTML = creators.slice(0,4).map((c,i) => `
-    <div class="ccard" onclick="openTreatModal('${c.id}','${(c.name||'').replace(/'/g,"\\'")}','${c.category||''}','${c.photo||''}')">
+  cards.innerHTML = creators.slice(0,4).map((c,i) => {
+    const safeName = (c.name||'').replace(/'/g,"\\'");
+    return `
+    <div class="ccard" onclick="openTreatModal('${c.id}','${safeName}','${c.category||''}','${c.photo||''}')">
       <div class="cav" style="background:${gradients[i%4]}">${c.photo ? `<img src="${c.photo}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">` : (catEmojis[c.category]||'🎙️')}</div>
       <div><span class="cn">${c.name||'Creator'}</span><span class="cc">${c.category||'Creator'}</span></div>
       <span class="ca">₹29+</span>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
  
 window.filterCreators = (cat) => {
@@ -976,19 +983,14 @@ window.confirmTreat = async () => {
   if (!selectedCreatorUid) { showToast('No creator selected!'); return; }
   if (!currentUser) { showToast('Please sign in!'); return; }
   const message = document.getElementById('modalMessage').value.trim();
- 
-  // Get creator's payment link from Firestore
   try {
     const creatorSnap = await getDoc(doc(db, 'creators', selectedCreatorUid));
     const creatorData = creatorSnap.data();
     const paymentLink = creatorData?.paymentLink;
- 
     if (!paymentLink) {
       showToast('Creator has not set up payments yet!');
       return;
     }
- 
-    // Save treat to Firestore first
     await addDoc(collection(db, 'treats'), {
       userId: currentUser.uid,
       userName: currentUser.displayName,
@@ -1000,17 +1002,10 @@ window.confirmTreat = async () => {
       status: 'pending',
       createdAt: serverTimestamp()
     });
- 
     closeModal();
     showToast(selectedTreatData.emoji + ' Redirecting to payment... 💳');
-    
-    // Open Razorpay payment link in new tab
-    setTimeout(() => {
-      window.open(paymentLink, '_blank');
-    }, 800);
- 
+    setTimeout(() => { window.open(paymentLink, '_blank'); }, 800);
     await loadUserTreats(currentUser.uid);
- 
   } catch(e) {
     console.log('Payment error full:', e.message, e.code, e);
     showToast('Error: ' + (e.message || 'Try again!'));
@@ -1057,34 +1052,81 @@ function updateUI(user, userData={}) {
  
 <!-- PAGE NAV + WRAPPERS -->
 <script>
-const pages=['home','browse','treats','history','profile'];
-function go(id,idx){
-  pages.forEach(p=>document.getElementById('p-'+p).classList.remove('show'));
-  setTimeout(()=>document.getElementById('p-'+id).classList.add('show'),60);
-  document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
-  document.querySelectorAll('.mob-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
-  if(id==='browse'){
-    // Retry until Firebase is ready
+const pages = ['home','browse','treats','history','profile'];
+
+function go(id, idx) {
+  pages.forEach(p => document.getElementById('p-'+p).classList.remove('show'));
+  setTimeout(() => document.getElementById('p-'+id).classList.add('show'), 60);
+  document.querySelectorAll('.nav-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  document.querySelectorAll('.mob-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  if (id === 'browse') {
     let tries = 0;
-    const tryLoad = setInterval(()=>{
+    const tryLoad = setInterval(() => {
       tries++;
-      if(window._loadCreators){ clearInterval(tryLoad); window._loadCreators(); }
-      if(tries > 20) clearInterval(tryLoad);
+      if (window._loadCreators) { clearInterval(tryLoad); window._loadCreators(); }
+      if (tries > 20) clearInterval(tryLoad);
     }, 500);
   }
 }
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3000);
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
 }
-function signInWithGoogle(){ if(window._signInWithGoogle) window._signInWithGoogle(); else showToast('Loading... tap again!'); }
-function signOut(){ if(window._signOut) window._signOut(); }
-function sendTreat(n,e,a){ if(window._sendTreat) window._sendTreat(n,e,a); else showToast('Please sign in first!'); }
-function sendMessage(){ if(window._sendMessage) window._sendMessage(); }
-function selectRole(r){ if(window.selectRole) window.selectRole(r); }
-function confirmRole(){ if(window.confirmRole) window.confirmRole(); }
-function saveCreatorProfile(){ if(window._saveCreatorProfile) window._saveCreatorProfile(); }
+
+// ✅ FIXED: Retry loop so Firebase module has time to load before calling
+function signInWithGoogle() {
+  if (window._signInWithGoogle) {
+    window._signInWithGoogle();
+  } else {
+    let tries = 0;
+    const trySign = setInterval(() => {
+      tries++;
+      if (window._signInWithGoogle) {
+        clearInterval(trySign);
+        window._signInWithGoogle();
+      }
+      if (tries > 20) {
+        clearInterval(trySign);
+        showToast('Failed to load. Please refresh the page.');
+      }
+    }, 300);
+  }
+}
+
+function signOut() {
+  if (window._signOut) {
+    window._signOut();
+  } else {
+    showToast('Loading...');
+  }
+}
+
+function sendTreat(n, e, a) {
+  if (window._sendTreat) {
+    window._sendTreat(n, e, a);
+  } else {
+    showToast('Please sign in first!');
+  }
+}
+
+function sendMessage() {
+  if (window._sendMessage) window._sendMessage();
+}
+
+function selectRole(r) {
+  if (window.selectRole) window.selectRole(r);
+}
+
+function confirmRole() {
+  if (window.confirmRole) window.confirmRole();
+}
+
+function saveCreatorProfile() {
+  if (window._saveCreatorProfile) window._saveCreatorProfile();
+}
 </script>
 </body>
 </html>
