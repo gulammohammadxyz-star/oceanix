@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Oceanix — Treat Your Favourite Creators</title>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -18,7 +17,7 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
   --dinner-bg:#eff6ff;--dinner-c:#2563eb;--ocean-bg:#faf5ff;--ocean-c:#9333ea;
 }
 .app{display:flex;width:100vw;height:100vh;overflow:hidden;background:var(--sky);}
- 
+
 /* SIDEBAR */
 .sidebar{width:240px;min-width:240px;background:var(--white);display:flex;flex-direction:column;padding:28px 18px;height:100vh;border-right:1px solid var(--border);box-shadow:4px 0 24px rgba(74,144,217,0.08);}
 .logo{font-family:'Syne',sans-serif;font-size:1.9rem;font-weight:800;color:var(--navy);letter-spacing:1px;line-height:1;}
@@ -31,7 +30,8 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
 .nav-btn:nth-child(1).active::before,.nav-btn:nth-child(1):hover::before{background:linear-gradient(135deg,var(--blue),var(--blue2));box-shadow:0 4px 20px rgba(74,144,217,0.4);}
 .nav-btn:nth-child(2).active::before,.nav-btn:nth-child(2):hover::before{background:linear-gradient(135deg,#ff6b6b,#ee5a24);box-shadow:0 4px 20px rgba(255,107,107,0.4);}
 .nav-btn:nth-child(3).active::before,.nav-btn:nth-child(3):hover::before{background:linear-gradient(135deg,var(--mint),#38b2ac);box-shadow:0 4px 20px rgba(78,205,196,0.4);}
-.nav-btn:nth-child(4).active::before,.nav-btn:nth-child(4):hover::before{background:linear-gradient(135deg,var(--purple),#7c3aed);box-shadow:0 4px 20px rgba(168,85,247,0.4);}
+.nav-btn:nth-child(4).active::before,.nav-btn:nth-child(4):hover::before{background:linear-gradient(135deg,var(--gold),#f59e0b);box-shadow:0 4px 20px rgba(255,217,61,0.4);}
+.nav-btn:nth-child(5).active::before,.nav-btn:nth-child(5):hover::before{background:linear-gradient(135deg,var(--purple),#7c3aed);box-shadow:0 4px 20px rgba(168,85,247,0.4);}
 .nav-icon{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;background:var(--sky);position:relative;z-index:1;transition:background 0.3s;}
 .nav-btn.active .nav-icon,.nav-btn:hover .nav-icon{background:rgba(255,255,255,0.25);}
 .nav-text{position:relative;z-index:1;flex:1;}
@@ -39,18 +39,16 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
 .nav-btn.active .nav-label,.nav-btn:hover .nav-label{color:white;}
 .nav-desc{font-size:0.6rem;color:var(--muted);display:block;margin-top:1px;transition:color 0.3s;}
 .nav-btn.active .nav-desc,.nav-btn:hover .nav-desc{color:rgba(255,255,255,0.75);}
-.nav-badge{background:var(--coral);color:white;font-size:0.55rem;font-weight:800;padding:2px 7px;border-radius:100px;position:relative;z-index:1;}
-.nav-btn.active .nav-badge,.nav-btn:hover .nav-badge{background:rgba(255,255,255,0.3);}
 .sidebar-foot{border-top:1px solid var(--border);padding-top:18px;}
 .join-btn{display:block;width:100%;background:linear-gradient(135deg,var(--blue),var(--blue2));color:white;font-weight:800;font-size:0.78rem;letter-spacing:1px;text-transform:uppercase;padding:13px;border:none;border-radius:100px;cursor:pointer;margin-bottom:12px;transition:all 0.3s;box-shadow:0 4px 16px rgba(74,144,217,0.35);}
 .join-btn:hover{transform:translateY(-2px);}
 .copy{font-size:0.55rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;text-align:center;display:block;}
- 
+
 /* MAIN + PAGES */
 .main{flex:1;height:100vh;position:relative;overflow:hidden;}
 .page{position:absolute;inset:0;overflow-y:auto;background:var(--sky);opacity:0;pointer-events:none;transition:opacity 0.4s,transform 0.4s;transform:translateY(12px);}
 .page.show{opacity:1;pointer-events:all;transform:translateY(0);}
- 
+
 /* HOME */
 #p-home{background:linear-gradient(160deg,var(--soft) 0%,var(--sky) 40%,var(--sky2) 100%);}
 .home-grid{display:grid;grid-template-columns:1fr 1fr;height:100vh;}
@@ -76,7 +74,7 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
 .blob3{width:150px;height:150px;background:var(--gold);top:50%;right:20px;}
 .cards{position:relative;z-index:2;display:flex;flex-direction:column;gap:10px;width:100%;max-width:300px;animation:floatCards 5s ease-in-out infinite;}
 @keyframes floatCards{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
-.ccard{background:rgba(255,255,255,0.85);border:1px solid rgba(255,255,255,0.9);border-radius:16px;padding:14px 18px;display:flex;align-items:center;gap:12px;backdrop-filter:blur(16px);transition:all 0.3s;box-shadow:0 4px 20px rgba(74,144,217,0.1);}
+.ccard{background:rgba(255,255,255,0.85);border:1px solid rgba(255,255,255,0.9);border-radius:16px;padding:14px 18px;display:flex;align-items:center;gap:12px;backdrop-filter:blur(16px);transition:all 0.3s;box-shadow:0 4px 20px rgba(74,144,217,0.1);cursor:pointer;}
 .ccard:hover{background:white;transform:translateX(6px);}
 .cav{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
 .cn{font-weight:700;font-size:0.82rem;color:var(--navy);display:block;}
@@ -87,8 +85,8 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
 .ticker-in span{font-size:0.6rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.9);flex-shrink:0;}
 .td{color:rgba(255,255,255,0.4)!important;}
 @keyframes tickA{from{transform:translateX(0);}to{transform:translateX(-50%);}}
- 
-/* TREATS */
+
+/* TREATS PAGE */
 #p-treats{background:linear-gradient(160deg,#f0f9ff 0%,#e0f2fe 60%,#bae6fd 100%);}
 .treats-wrap{min-height:100vh;padding:56px 48px;}
 .treats-head{text-align:center;margin-bottom:48px;}
@@ -135,15 +133,33 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
 .tc-ocean .tc-perk::before{background:rgba(147,51,234,0.12);color:var(--ocean-c);}
 .tc-btn{font-weight:800;font-size:0.72rem;letter-spacing:1.5px;text-transform:uppercase;padding:12px 16px;border:none;border-radius:100px;cursor:pointer;transition:all 0.3s;}
 .tc-chai .tc-btn{background:var(--chai-c);color:white;}
-.tc-chai .tc-btn:hover{transform:translateY(-2px);}
 .tc-snack .tc-btn{background:var(--snack-c);color:white;}
-.tc-snack .tc-btn:hover{transform:translateY(-2px);}
 .tc-dinner .tc-btn{background:var(--dinner-c);color:white;}
-.tc-dinner .tc-btn:hover{transform:translateY(-2px);}
 .tc-ocean .tc-btn{background:var(--ocean-c);color:white;}
-.tc-ocean .tc-btn:hover{transform:translateY(-2px);}
+.tc-btn:hover{transform:translateY(-2px);}
 .tc-ribbon{position:absolute;top:16px;right:-28px;background:linear-gradient(135deg,var(--gold),#f59e0b);color:var(--navy);font-size:0.55rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:5px 36px;transform:rotate(45deg);}
- 
+
+/* BROWSE */
+#p-browse{background:linear-gradient(160deg,#f0f9ff 0%,#e0f2fe 60%,#bae6fd 100%);}
+.browse-wrap{min-height:100vh;padding:48px 48px;}
+.browse-head{text-align:center;margin-bottom:36px;}
+.browse-filters{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:20px;}
+.filter-btn{font-size:0.7rem;font-weight:700;letter-spacing:1px;padding:7px 16px;border-radius:100px;border:2px solid var(--border);background:white;color:var(--navy);cursor:pointer;transition:all 0.3s;}
+.filter-btn:hover{border-color:var(--blue);color:var(--blue);}
+.filter-btn.active{background:var(--blue);color:white;border-color:var(--blue);}
+.creator-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:8px;}
+.creator-card{background:white;border-radius:24px;padding:28px 24px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;box-shadow:0 4px 24px rgba(74,144,217,0.08);border:2px solid var(--border);transition:all 0.3s;cursor:pointer;}
+.creator-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(74,144,217,0.15);border-color:var(--blue);}
+.creator-av{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;border:3px solid var(--border);overflow:hidden;flex-shrink:0;}
+.creator-av img{width:100%;height:100%;object-fit:cover;}
+.creator-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--navy);}
+.creator-cat{font-size:0.65rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:rgba(74,144,217,0.1);color:var(--blue);padding:3px 10px;border-radius:100px;}
+.creator-bio{font-size:0.75rem;color:var(--muted);line-height:1.6;}
+.creator-treat-btn{width:100%;font-weight:800;font-size:0.72rem;letter-spacing:1px;text-transform:uppercase;background:linear-gradient(135deg,var(--blue),var(--blue2));color:white;padding:11px;border:none;border-radius:100px;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 14px rgba(74,144,217,0.3);}
+.creator-treat-btn:hover{transform:translateY(-2px);}
+.no-creators{text-align:center;padding:48px;color:var(--muted);grid-column:1/-1;}
+.no-creators-emoji{font-size:3rem;display:block;margin-bottom:12px;}
+
 /* HISTORY */
 #p-history{background:linear-gradient(160deg,#f0fdf4 0%,#dcfce7 40%,#bbf7d0 100%);}
 .history-grid{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;}
@@ -184,67 +200,140 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
 .chat-in:focus{border-color:var(--blue);}
 .chat-snd{width:36px;height:36px;background:linear-gradient(135deg,var(--blue),var(--blue2));border:none;border-radius:50%;font-size:0.9rem;cursor:pointer;transition:all 0.3s;flex-shrink:0;}
 .chat-snd:hover{transform:scale(1.1);}
- 
-/* PROFILE */
-#p-profile{background:linear-gradient(160deg,#faf5ff 0%,#ede9fe 40%,#ddd6fe 100%);}
-.profile-grid{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;}
-.prof-l{padding:56px 40px;border-right:2px solid rgba(168,85,247,0.12);display:flex;flex-direction:column;gap:20px;}
-.prof-r{padding:56px 40px;}
-.pav-wrap{position:relative;width:fit-content;}
-.pav{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));display:flex;align-items:center;justify-content:center;font-size:2.2rem;border:3px solid white;box-shadow:0 8px 24px rgba(168,85,247,0.3);overflow:hidden;}
-.pav img{width:100%;height:100%;object-fit:cover;}
-.ponline{position:absolute;bottom:4px;right:4px;width:14px;height:14px;background:var(--green);border-radius:50%;border:2px solid white;}
-.pname{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--navy);}
-.phandle{font-size:0.7rem;color:var(--muted);letter-spacing:1px;font-weight:600;}
-.pstats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
-.ps{background:white;border-radius:14px;padding:12px 8px;text-align:center;box-shadow:0 4px 12px rgba(168,85,247,0.08);}
-.psv{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--purple);}
-.psk{font-size:0.52rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
-.pbio{font-size:0.82rem;color:var(--muted);line-height:1.7;}
-.pbadges{display:flex;gap:8px;flex-wrap:wrap;}
-.pbdg{font-size:0.62rem;font-weight:800;letter-spacing:1px;padding:5px 12px;border-radius:100px;}
-.pg{background:linear-gradient(135deg,#ffd93d,#f59e0b);color:var(--navy);}
-.ptl{background:linear-gradient(135deg,var(--blue),var(--mint));color:white;}
-.prst{background:linear-gradient(135deg,var(--coral),#ee5a24);color:white;}
-.pacts{display:flex;flex-direction:column;gap:8px;}
-.pact{font-weight:700;font-size:0.75rem;letter-spacing:1px;text-transform:uppercase;padding:11px 16px;border-radius:100px;cursor:pointer;transition:all 0.3s;border:none;}
-.pa1{background:linear-gradient(135deg,var(--purple),#7c3aed);color:white;}
-.pa1:hover{transform:translateY(-2px);}
-.pa2{background:white;color:var(--navy);border:2px solid var(--border);}
-.pa2:hover{border-color:var(--purple);color:var(--purple);}
-.sect-title-sm{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:var(--navy);margin-bottom:4px;}
-.feed{display:flex;flex-direction:column;gap:10px;margin-top:8px;}
-.fcard{background:white;border-radius:18px;padding:16px;display:flex;align-items:flex-start;gap:12px;box-shadow:0 4px 16px rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.1);transition:all 0.3s;}
-.fcard:hover{transform:translateY(-3px);}
-.fav{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
-.ftop{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
-.fn{font-weight:700;font-size:0.82rem;color:var(--navy);}
-.ftag{font-size:0.58rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:rgba(168,85,247,0.1);color:var(--purple);padding:2px 8px;border-radius:100px;}
-.fm{font-size:0.72rem;color:var(--muted);line-height:1.6;font-style:italic;}
-.fti{font-size:0.58rem;color:var(--muted);margin-top:6px;font-weight:600;}
-.famount{margin-left:auto;text-align:right;flex-shrink:0;}
-.fval{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--purple);}
-.ftype{font-size:0.6rem;color:var(--muted);font-weight:600;margin-top:2px;}
- 
-/* MOBILE NAV */
-.mob{display:none;position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:100;}
-.mob-items{display:flex;gap:4px;background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);border-radius:100px;padding:6px;box-shadow:0 8px 32px rgba(26,58,92,0.15);}
-.mob-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 16px;border-radius:100px;border:none;background:transparent;cursor:pointer;transition:all 0.3s;}
-.mob-btn.active{background:linear-gradient(135deg,var(--blue),var(--blue2));box-shadow:0 4px 14px rgba(74,144,217,0.4);}
-.mob-ic{font-size:1.1rem;}
-.mob-lb{font-size:0.5rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
-.mob-btn.active .mob-lb{color:white;}
- 
-@media(max-width:768px){
-  .sidebar{display:none;}.mob{display:block;}
-  .home-grid,.history-grid,.profile-grid{grid-template-columns:1fr;}
-  .home-right{display:none;}
-  .treat-cards{grid-template-columns:1fr 1fr;}
-  .home-left,.treats-wrap,.hist-l,.hist-r,.prof-l,.prof-r{padding:32px 20px;}
-  .pstats{grid-template-columns:repeat(2,1fr);}
-}
-@media(max-width:480px){.treat-cards{grid-template-columns:1fr;}}
- 
+
+/* ===================== PROFILE PAGE (NEW DUAL MODE) ===================== */
+#p-profile{background:linear-gradient(160deg,#0d1b2a 0%,#1a3a5c 50%,#0d2137 100%);min-height:100vh;}
+
+/* Profile Hero */
+.prof-hero{position:relative;padding:48px 48px 0;display:flex;align-items:flex-end;gap:28px;overflow:hidden;}
+.prof-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(74,144,217,0.12),rgba(168,85,247,0.08));pointer-events:none;}
+.prof-hero-blob1{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(74,144,217,0.2),transparent);top:-100px;right:-80px;pointer-events:none;}
+.prof-hero-blob2{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(168,85,247,0.15),transparent);bottom:-80px;left:200px;pointer-events:none;}
+.prof-av-wrap{position:relative;flex-shrink:0;}
+.prof-av{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));display:flex;align-items:center;justify-content:center;font-size:2.8rem;border:4px solid rgba(255,255,255,0.15);box-shadow:0 12px 40px rgba(0,0,0,0.3);overflow:hidden;}
+.prof-av img{width:100%;height:100%;object-fit:cover;}
+.prof-online{position:absolute;bottom:6px;right:6px;width:16px;height:16px;background:var(--green);border-radius:50%;border:3px solid #0d1b2a;}
+.prof-info{flex:1;padding-bottom:24px;}
+.prof-name{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:white;margin-bottom:4px;}
+.prof-email{font-size:0.75rem;color:rgba(255,255,255,0.4);font-weight:600;margin-bottom:12px;}
+.prof-badges{display:flex;gap:8px;flex-wrap:wrap;}
+.pbdg{font-size:0.6rem;font-weight:800;letter-spacing:1px;padding:4px 12px;border-radius:100px;}
+.pbdg-fan{background:rgba(74,144,217,0.2);color:#7bc8f6;border:1px solid rgba(74,144,217,0.3);}
+.pbdg-creator{background:rgba(168,85,247,0.2);color:#d8b4fe;border:1px solid rgba(168,85,247,0.3);}
+.pbdg-gold{background:rgba(255,217,61,0.15);color:#fcd34d;border:1px solid rgba(255,217,61,0.3);}
+.prof-actions-top{display:flex;gap:10px;align-items:center;padding-bottom:24px;flex-shrink:0;}
+.prof-edit-btn{font-weight:700;font-size:0.72rem;letter-spacing:1px;text-transform:uppercase;padding:10px 20px;border-radius:100px;cursor:pointer;transition:all 0.3s;border:1.5px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.8);}
+.prof-edit-btn:hover{background:rgba(255,255,255,0.15);color:white;}
+.prof-signout-btn{font-weight:700;font-size:0.72rem;letter-spacing:1px;text-transform:uppercase;padding:10px 20px;border-radius:100px;cursor:pointer;transition:all 0.3s;border:1.5px solid rgba(255,107,107,0.3);background:rgba(255,107,107,0.08);color:rgba(255,107,107,0.8);}
+.prof-signout-btn:hover{background:rgba(255,107,107,0.15);color:var(--coral);}
+
+/* MODE TABS */
+.mode-tabs-wrap{padding:0 48px;margin-top:28px;}
+.mode-tabs{display:inline-flex;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:5px;gap:4px;}
+.mode-tab{display:flex;align-items:center;gap:8px;padding:10px 24px;border-radius:100px;border:none;cursor:pointer;transition:all 0.35s;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.82rem;letter-spacing:0.5px;background:transparent;color:rgba(255,255,255,0.45);}
+.mode-tab.active-fan{background:linear-gradient(135deg,var(--blue),var(--blue2));color:white;box-shadow:0 4px 20px rgba(74,144,217,0.5);}
+.mode-tab.active-creator{background:linear-gradient(135deg,var(--purple),#7c3aed);color:white;box-shadow:0 4px 20px rgba(168,85,247,0.5);}
+.mode-tab-icon{font-size:1rem;}
+
+/* MODE PANELS */
+.mode-panel{display:none;padding:32px 48px 48px;animation:panelIn 0.4s ease;}
+.mode-panel.active{display:block;}
+@keyframes panelIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* FAN PANEL */
+.fan-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
+.fan-stat{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:20px;text-align:center;transition:all 0.3s;}
+.fan-stat:hover{background:rgba(255,255,255,0.1);transform:translateY(-3px);}
+.fan-stat-val{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:white;display:block;}
+.fan-stat-key{font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:4px;display:block;}
+.fan-stat-icon{font-size:1.4rem;display:block;margin-bottom:8px;}
+
+.fan-two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.fan-section{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:24px;padding:24px;}
+.fan-section-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:white;margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+.fan-section-sub{font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:18px;}
+
+/* Following list */
+.following-list{display:flex;flex-direction:column;gap:10px;}
+.following-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);transition:all 0.3s;cursor:pointer;}
+.following-item:hover{background:rgba(255,255,255,0.1);transform:translateX(4px);}
+.following-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.following-name{font-weight:700;font-size:0.82rem;color:white;flex:1;}
+.following-cat{font-size:0.6rem;color:rgba(255,255,255,0.4);display:block;margin-top:1px;}
+.following-treat-btn{font-size:0.6rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:100px;border:1px solid rgba(74,144,217,0.4);background:rgba(74,144,217,0.1);color:#7bc8f6;cursor:pointer;transition:all 0.3s;}
+.following-treat-btn:hover{background:rgba(74,144,217,0.2);}
+
+/* Treat history in fan */
+.treat-hist-list{display:flex;flex-direction:column;gap:8px;}
+.treat-hist-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);}
+.thi-emoji{font-size:1.4rem;flex-shrink:0;}
+.thi-name{font-weight:700;font-size:0.8rem;color:white;}
+.thi-time{font-size:0.58rem;color:rgba(255,255,255,0.35);margin-top:1px;}
+.thi-amt{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:800;color:#7bc8f6;margin-left:auto;}
+
+/* Fan badges */
+.badge-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.badge-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);}
+.badge-icon{font-size:1.2rem;}
+.badge-name{font-size:0.72rem;font-weight:700;color:rgba(255,255,255,0.8);}
+.badge-desc{font-size:0.55rem;color:rgba(255,255,255,0.35);}
+
+/* ---- CREATOR PANEL ---- */
+.creator-not-setup{text-align:center;padding:48px;background:rgba(168,85,247,0.06);border:2px dashed rgba(168,85,247,0.2);border-radius:28px;max-width:480px;margin:0 auto;}
+.creator-not-setup-emoji{font-size:3.5rem;display:block;margin-bottom:16px;}
+.creator-not-setup-title{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:white;margin-bottom:8px;}
+.creator-not-setup-sub{font-size:0.82rem;color:rgba(255,255,255,0.4);line-height:1.7;margin-bottom:24px;}
+.become-creator-btn{font-weight:800;font-size:0.82rem;letter-spacing:1px;text-transform:uppercase;padding:14px 32px;border:none;border-radius:100px;background:linear-gradient(135deg,var(--purple),#7c3aed);color:white;cursor:pointer;transition:all 0.3s;box-shadow:0 6px 24px rgba(168,85,247,0.4);}
+.become-creator-btn:hover{transform:translateY(-2px);}
+
+.creator-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
+.creator-stat{background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.15);border-radius:20px;padding:20px;text-align:center;transition:all 0.3s;}
+.creator-stat:hover{background:rgba(168,85,247,0.14);transform:translateY(-3px);}
+.creator-stat-val{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:#d8b4fe;display:block;}
+.creator-stat-key{font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;color:rgba(168,85,247,0.6);margin-top:4px;display:block;}
+.creator-stat-icon{font-size:1.4rem;display:block;margin-bottom:8px;}
+
+.creator-two-col{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;}
+.creator-section{background:rgba(168,85,247,0.05);border:1px solid rgba(168,85,247,0.12);border-radius:24px;padding:24px;}
+.creator-section-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:white;margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+.creator-section-sub{font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:rgba(168,85,247,0.5);margin-bottom:18px;}
+
+/* Earnings chart (simple bars) */
+.earn-chart{display:flex;align-items:flex-end;gap:6px;height:80px;margin-bottom:12px;}
+.earn-bar-wrap{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;}
+.earn-bar{width:100%;background:linear-gradient(to top,rgba(168,85,247,0.8),rgba(168,85,247,0.3));border-radius:6px 6px 0 0;transition:all 0.5s;}
+.earn-bar-label{font-size:0.5rem;color:rgba(255,255,255,0.35);letter-spacing:0.5px;}
+.earn-total{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:#d8b4fe;margin-bottom:4px;}
+.earn-sub{font-size:0.62rem;color:rgba(168,85,247,0.6);letter-spacing:1px;text-transform:uppercase;}
+
+/* Followers list */
+.followers-list{display:flex;flex-direction:column;gap:8px;max-height:220px;overflow-y:auto;}
+.follower-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);}
+.follower-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;background:linear-gradient(135deg,#667eea,#764ba2);}
+.follower-name{font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.8);flex:1;}
+.follower-treated{font-size:0.6rem;color:rgba(168,85,247,0.6);}
+
+/* Creator page info */
+.page-info-field{margin-bottom:14px;}
+.page-info-label{font-size:0.58rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);display:block;margin-bottom:5px;}
+.page-info-val{font-size:0.85rem;font-weight:600;color:rgba(255,255,255,0.8);}
+.edit-page-btn{width:100%;font-weight:800;font-size:0.72rem;letter-spacing:1px;text-transform:uppercase;padding:11px;border-radius:100px;border:1.5px solid rgba(168,85,247,0.4);background:rgba(168,85,247,0.1);color:#d8b4fe;cursor:pointer;transition:all 0.3s;margin-top:8px;}
+.edit-page-btn:hover{background:rgba(168,85,247,0.2);}
+
+/* ===================== END PROFILE ===================== */
+
+/* USER BAR IN SIDEBAR */
+.user-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;background:var(--sky);margin-bottom:16px;border:1px solid var(--border);}
+.user-bar-av{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid var(--blue);}
+.user-bar-av-placeholder{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:white;font-weight:700;border:2px solid var(--blue);}
+.user-bar-name{font-size:0.75rem;font-weight:700;color:var(--navy);flex:1;}
+.signout-btn{font-size:0.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:none;border:1px solid var(--border);border-radius:100px;padding:4px 10px;color:var(--muted);cursor:pointer;transition:all 0.3s;}
+.signout-btn:hover{border-color:var(--coral);color:var(--coral);}
+
+/* SPINNER */
+.spinner{width:20px;height:20px;border:2px solid rgba(74,144,217,0.3);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite;display:inline-block;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
 /* AUTH OVERLAY */
 .auth-overlay{position:fixed;inset:0;z-index:1000;background:linear-gradient(160deg,#0f2027,#203a43,#2c5364);display:flex;align-items:center;justify-content:center;opacity:1;transition:opacity 0.5s;}
 .auth-overlay.hide{opacity:0;pointer-events:none;}
@@ -259,29 +348,11 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
 .google-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
 .google-icon{width:20px;height:20px;}
 .auth-note{font-size:0.62rem;color:rgba(255,255,255,0.3);margin-top:20px;line-height:1.6;}
- 
-/* ROLE OVERLAY */
-.role-overlay{position:fixed;inset:0;z-index:999;background:linear-gradient(160deg,#0f2027,#203a43,#2c5364);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.4s;}
-.role-overlay.show{opacity:1;pointer-events:all;}
-.role-box{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:28px;padding:48px 40px;width:90%;max-width:500px;backdrop-filter:blur(20px);text-align:center;box-shadow:0 24px 64px rgba(0,0,0,0.4);}
-.role-title{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:white;margin-bottom:8px;}
-.role-sub{font-size:0.82rem;color:rgba(255,255,255,0.5);margin-bottom:36px;line-height:1.6;}
-.role-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
-.role-card{background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.1);border-radius:20px;padding:28px 20px;cursor:pointer;transition:all 0.3s;text-align:center;}
-.role-card:hover{background:rgba(255,255,255,0.1);transform:translateY(-4px);}
-.role-card.selected{border-color:var(--blue);background:rgba(74,144,217,0.15);}
-.role-card.selected.creator-card{border-color:var(--purple);background:rgba(168,85,247,0.15);}
-.role-emoji{font-size:2.5rem;margin-bottom:12px;display:block;}
-.role-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:white;margin-bottom:6px;}
-.role-desc{font-size:0.7rem;color:rgba(255,255,255,0.45);line-height:1.5;}
-.role-btn{width:100%;padding:15px;background:linear-gradient(135deg,var(--blue),var(--blue2));border:none;border-radius:100px;font-family:'Nunito',sans-serif;font-size:0.88rem;font-weight:800;color:white;cursor:pointer;transition:all 0.3s;opacity:0.5;pointer-events:none;}
-.role-btn.ready{opacity:1;pointer-events:all;}
-.role-btn.ready:hover{transform:translateY(-2px);}
- 
+
 /* CREATOR SETUP OVERLAY */
-.setup-overlay{position:fixed;inset:0;z-index:998;background:linear-gradient(160deg,#1a0533,#2d1b69,#1a3a5c);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.4s;}
+.setup-overlay{position:fixed;inset:0;z-index:998;background:linear-gradient(160deg,#1a0533,#2d1b69,#1a3a5c);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.4s;overflow-y:auto;}
 .setup-overlay.show{opacity:1;pointer-events:all;}
-.setup-box{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:28px;padding:40px;width:90%;max-width:480px;backdrop-filter:blur(20px);box-shadow:0 24px 64px rgba(0,0,0,0.4);}
+.setup-box{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:28px;padding:40px;width:90%;max-width:480px;backdrop-filter:blur(20px);box-shadow:0 24px 64px rgba(0,0,0,0.4);margin:auto;}
 .setup-title{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:white;margin-bottom:4px;}
 .setup-sub{font-size:0.78rem;color:rgba(255,255,255,0.45);margin-bottom:28px;}
 .setup-field{margin-bottom:16px;}
@@ -294,43 +365,13 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
 .setup-btn{width:100%;padding:14px;margin-top:8px;background:linear-gradient(135deg,var(--purple),#7c3aed);border:none;border-radius:100px;font-family:'Nunito',sans-serif;font-size:0.88rem;font-weight:800;color:white;cursor:pointer;transition:all 0.3s;}
 .setup-btn:hover{transform:translateY(-2px);}
 .setup-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
-.creator-badge{font-size:0.55rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:100px;background:linear-gradient(135deg,var(--purple),#7c3aed);color:white;margin-left:6px;}
- 
+.setup-close-btn{width:100%;padding:11px;margin-top:8px;background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:100px;font-family:'Nunito',sans-serif;font-size:0.82rem;font-weight:700;color:rgba(255,255,255,0.4);cursor:pointer;transition:all 0.3s;}
+.setup-close-btn:hover{color:rgba(255,255,255,0.7);}
+
 /* TOAST */
 .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:white;padding:10px 20px;border-radius:100px;font-size:0.75rem;font-weight:700;opacity:0;transition:all 0.3s;z-index:2000;white-space:nowrap;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
- 
-/* USER BAR */
-.user-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;background:var(--sky);margin-bottom:16px;border:1px solid var(--border);}
-.user-bar-av{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid var(--blue);}
-.user-bar-av-placeholder{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:white;font-weight:700;border:2px solid var(--blue);}
-.user-bar-name{font-size:0.75rem;font-weight:700;color:var(--navy);flex:1;}
-.signout-btn{font-size:0.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:none;border:1px solid var(--border);border-radius:100px;padding:4px 10px;color:var(--muted);cursor:pointer;transition:all 0.3s;}
-.signout-btn:hover{border-color:var(--coral);color:var(--coral);}
-.spinner{width:20px;height:20px;border:2px solid rgba(74,144,217,0.3);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite;display:inline-block;}
-@keyframes spin{to{transform:rotate(360deg);}}
- 
-/* BROWSE CREATORS PAGE */
-#p-browse{background:linear-gradient(160deg,#f0f9ff 0%,#e0f2fe 60%,#bae6fd 100%);}
-.browse-wrap{min-height:100vh;padding:48px 48px;}
-.browse-head{text-align:center;margin-bottom:36px;}
-.browse-filters{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:20px;}
-.filter-btn{font-size:0.7rem;font-weight:700;letter-spacing:1px;padding:7px 16px;border-radius:100px;border:2px solid var(--border);background:white;color:var(--navy);cursor:pointer;transition:all 0.3s;}
-.filter-btn:hover{border-color:var(--blue);color:var(--blue);}
-.filter-btn.active{background:var(--blue);color:white;border-color:var(--blue);}
-.creator-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:8px;}
-.creator-card{background:white;border-radius:24px;padding:28px 24px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;box-shadow:0 4px 24px rgba(74,144,217,0.08);border:2px solid var(--border);transition:all 0.3s;cursor:pointer;}
-.creator-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(74,144,217,0.15);border-color:var(--blue);}
-.creator-av{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;border:3px solid var(--border);overflow:hidden;flex-shrink:0;}
-.creator-av img{width:100%;height:100%;object-fit:cover;}
-.creator-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--navy);}
-.creator-cat{font-size:0.65rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:rgba(74,144,217,0.1);color:var(--blue);padding:3px 10px;border-radius:100px;}
-.creator-bio{font-size:0.75rem;color:var(--muted);line-height:1.6;}
-.creator-treat-btn{width:100%;font-weight:800;font-size:0.72rem;letter-spacing:1px;text-transform:uppercase;background:linear-gradient(135deg,var(--blue),var(--blue2));color:white;padding:11px;border:none;border-radius:100px;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 14px rgba(74,144,217,0.3);}
-.creator-treat-btn:hover{transform:translateY(-2px);}
-.no-creators{text-align:center;padding:48px;color:var(--muted);grid-column:1/-1;}
-.no-creators-emoji{font-size:3rem;display:block;margin-bottom:12px;}
- 
+
 /* SEND TREAT MODAL */
 .modal-overlay{position:fixed;inset:0;z-index:900;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s;backdrop-filter:blur(4px);}
 .modal-overlay.show{opacity:1;pointer-events:all;}
@@ -354,12 +395,38 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
 .modal-send-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--blue),var(--blue2));color:white;border:none;border-radius:100px;font-family:'Nunito',sans-serif;font-size:0.88rem;font-weight:800;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 16px rgba(74,144,217,0.3);}
 .modal-send-btn:hover{transform:translateY(-2px);}
 .modal-cancel{width:100%;padding:10px;background:none;border:none;color:var(--muted);font-size:0.78rem;cursor:pointer;margin-top:8px;}
-@media(max-width:768px){.creator-grid{grid-template-columns:1fr 1fr;}.browse-wrap{padding:32px 20px;}}
-@media(max-width:480px){.creator-grid{grid-template-columns:1fr;}}
+
+/* MOBILE NAV */
+.mob{display:none;position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:100;}
+.mob-items{display:flex;gap:4px;background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);border-radius:100px;padding:6px;box-shadow:0 8px 32px rgba(26,58,92,0.15);}
+.mob-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 16px;border-radius:100px;border:none;background:transparent;cursor:pointer;transition:all 0.3s;}
+.mob-btn.active{background:linear-gradient(135deg,var(--blue),var(--blue2));box-shadow:0 4px 14px rgba(74,144,217,0.4);}
+.mob-ic{font-size:1.1rem;}
+.mob-lb{font-size:0.5rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
+.mob-btn.active .mob-lb{color:white;}
+
+@media(max-width:768px){
+  .sidebar{display:none;}.mob{display:block;}
+  .home-grid,.history-grid{grid-template-columns:1fr;}
+  .home-right{display:none;}
+  .treat-cards{grid-template-columns:1fr 1fr;}
+  .home-left,.treats-wrap,.hist-l,.hist-r{padding:32px 20px;}
+  .fan-stats-grid,.creator-stats-grid{grid-template-columns:repeat(2,1fr);}
+  .fan-two-col,.creator-two-col{grid-template-columns:1fr;}
+  .prof-hero{flex-direction:column;align-items:flex-start;padding:32px 20px 0;}
+  .mode-tabs-wrap{padding:0 20px;}
+  .mode-panel{padding:24px 20px 40px;}
+  .creator-grid{grid-template-columns:1fr 1fr;}
+  .browse-wrap{padding:32px 20px;}
+}
+@media(max-width:480px){
+  .treat-cards,.creator-grid{grid-template-columns:1fr;}
+  .fan-stats-grid,.creator-stats-grid{grid-template-columns:1fr 1fr;}
+}
 </style>
 </head>
 <body>
- 
+
 <!-- AUTH OVERLAY -->
 <div class="auth-overlay" id="authOverlay">
   <div class="auth-box">
@@ -374,30 +441,7 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
     <div class="auth-note">By continuing you agree to Oceanix's Terms of Service. Your data is safe with Firebase Auth 🔒</div>
   </div>
 </div>
- 
-<!-- ROLE SELECTION OVERLAY -->
-<div class="role-overlay" id="roleOverlay">
-  <div class="role-box">
-    <div class="auth-logo" style="margin-bottom:4px;">OCEAN<span>IX</span></div>
-    <div class="auth-tagline" style="margin-bottom:20px;">One last step!</div>
-    <div class="role-title">Who are you? 🤔</div>
-    <div class="role-sub">Tell us how you want to use Oceanix.</div>
-    <div class="role-cards">
-      <div class="role-card" id="fanCard" onclick="selectRole('fan')">
-        <span class="role-emoji">🌊</span>
-        <div class="role-name">I'm a Fan</div>
-        <div class="role-desc">I want to support my favourite Indian creators</div>
-      </div>
-      <div class="role-card creator-card" id="creatorCard" onclick="selectRole('creator')">
-        <span class="role-emoji">🎙️</span>
-        <div class="role-name">I'm a Creator</div>
-        <div class="role-desc">I create content and want to receive support</div>
-      </div>
-    </div>
-    <button class="role-btn" id="roleBtn" onclick="confirmRole()">Select a role to continue</button>
-  </div>
-</div>
- 
+
 <!-- CREATOR SETUP OVERLAY -->
 <div class="setup-overlay" id="setupOverlay">
   <div class="setup-box">
@@ -437,12 +481,13 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
       <input class="setup-input" id="setupUpi" placeholder="e.g. yourname@upi" />
     </div>
     <button class="setup-btn" id="setupBtn" onclick="saveCreatorProfile()">🚀 Launch My Creator Page</button>
+    <button class="setup-close-btn" onclick="document.getElementById('setupOverlay').classList.remove('show')">Cancel</button>
   </div>
 </div>
- 
+
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
- 
+
 <!-- APP -->
 <div class="app">
   <aside class="sidebar">
@@ -451,12 +496,12 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
     <div class="user-bar" id="sidebarUser" style="display:none;">
       <div class="user-bar-av-placeholder" id="sidebarAvatar">?</div>
       <span class="user-bar-name" id="sidebarName">Loading...</span>
-      <button class="signout-btn" onclick="signOut()">Sign out</button>
+      <button class="signout-btn" onclick="signOut()">Out</button>
     </div>
     <ul class="nav">
       <li><button class="nav-btn active" onclick="go('home',0)">
         <div class="nav-icon">🌊</div>
-        <div class="nav-text"><span class="nav-label">Home</span><span class="nav-desc">Discover creators</span></div>
+        <div class="nav-text"><span class="nav-label">Home</span><span class="nav-desc">Your feed</span></div>
       </button></li>
       <li><button class="nav-btn" onclick="go('browse',1)">
         <div class="nav-icon">🔍</div>
@@ -468,11 +513,11 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
       </button></li>
       <li><button class="nav-btn" onclick="go('history',3)">
         <div class="nav-icon">💬</div>
-        <div class="nav-text"><span class="nav-label">History & Chats</span><span class="nav-desc">Messages & treats</span></div>
+        <div class="nav-text"><span class="nav-label">History</span><span class="nav-desc">Messages & treats</span></div>
       </button></li>
       <li><button class="nav-btn" onclick="go('profile',4)">
         <div class="nav-icon">👤</div>
-        <div class="nav-text"><span class="nav-label">Profile</span><span class="nav-desc">Your fan identity</span></div>
+        <div class="nav-text"><span class="nav-label">Profile</span><span class="nav-desc">Fan & Creator</span></div>
       </button></li>
     </ul>
     <div class="sidebar-foot">
@@ -480,7 +525,7 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
       <span class="copy">© 2025 Oceanix · India 🇮🇳</span>
     </div>
   </aside>
- 
+
   <main class="main">
     <!-- HOME -->
     <div class="page show" id="p-home">
@@ -511,33 +556,31 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
         </div>
       </div>
     </div>
- 
-    <!-- BROWSE CREATORS -->
+
+    <!-- BROWSE -->
     <div class="page" id="p-browse">
       <div class="browse-wrap">
         <div class="browse-head">
           <h2 class="treats-title">Browse <span class="hl">Creators</span> 🎙️</h2>
           <p class="treats-sub-text">Discover amazing Indian creators and show them some love!</p>
-          <div class="browse-filters" id="browseFilters">
-            <button class="filter-btn active" onclick="filterCreators('all')">All</button>
-            <button class="filter-btn" onclick="filterCreators('Tech')">💻 Tech</button>
-            <button class="filter-btn" onclick="filterCreators('Gaming')">🎮 Gaming</button>
-            <button class="filter-btn" onclick="filterCreators('Finance')">📈 Finance</button>
-            <button class="filter-btn" onclick="filterCreators('Art')">🎨 Art</button>
-            <button class="filter-btn" onclick="filterCreators('Music')">🎵 Music</button>
-            <button class="filter-btn" onclick="filterCreators('Education')">📚 Education</button>
-            <button class="filter-btn" onclick="filterCreators('Food')">🍳 Food</button>
-            <button class="filter-btn" onclick="filterCreators('Podcast')">🎙️ Podcast</button>
+          <div class="browse-filters">
+            <button class="filter-btn active" onclick="filterCreators('all',event)">All</button>
+            <button class="filter-btn" onclick="filterCreators('Tech',event)">💻 Tech</button>
+            <button class="filter-btn" onclick="filterCreators('Gaming',event)">🎮 Gaming</button>
+            <button class="filter-btn" onclick="filterCreators('Finance',event)">📈 Finance</button>
+            <button class="filter-btn" onclick="filterCreators('Art',event)">🎨 Art</button>
+            <button class="filter-btn" onclick="filterCreators('Music',event)">🎵 Music</button>
+            <button class="filter-btn" onclick="filterCreators('Education',event)">📚 Education</button>
+            <button class="filter-btn" onclick="filterCreators('Food',event)">🍳 Food</button>
+            <button class="filter-btn" onclick="filterCreators('Podcast',event)">🎙️ Podcast</button>
           </div>
         </div>
         <div class="creator-grid" id="creatorGrid">
-          <div style="text-align:center;padding:48px;color:var(--muted);grid-column:1/-1;">
-            <span class="spinner"></span><br><br>Loading creators...
-          </div>
+          <div style="text-align:center;padding:48px;color:var(--muted);grid-column:1/-1;"><span class="spinner"></span><br><br>Loading creators...</div>
         </div>
       </div>
     </div>
- 
+
     <!-- TREATS -->
     <div class="page" id="p-treats">
       <div class="treats-wrap">
@@ -578,7 +621,7 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
         </div>
       </div>
     </div>
- 
+
     <!-- HISTORY -->
     <div class="page" id="p-history">
       <div class="history-grid">
@@ -586,11 +629,11 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
           <h2 class="sect-title">Treat History 📜</h2>
           <p class="sect-sub">All your sends at a glance</p>
           <div class="hlist" id="treatHistoryList">
-            <div style="text-align:center;padding:24px;color:var(--muted);font-size:0.82rem;"><span class="spinner"></span><br><br>Loading your treats...</div>
+            <div style="text-align:center;padding:24px;color:var(--muted);font-size:0.82rem;"><span class="spinner"></span><br><br>Loading...</div>
           </div>
           <div class="htotals">
             <div class="hbox"><div class="hbv" id="totalSpent">₹0</div><div class="hbk">Total treats sent</div></div>
-            <div class="hbox"><div class="hbv" id="totalCreators">0</div><div class="hbk">Treats sent</div></div>
+            <div class="hbox"><div class="hbv" id="totalCreators">0</div><div class="hbk">Treats count</div></div>
           </div>
         </div>
         <div class="hist-r">
@@ -599,7 +642,7 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
           <div class="chat-win">
             <div class="chat-top">
               <div class="chav">🎙️</div>
-              <div><div class="chn">Rohan Malhotra</div><div class="cho">Online now</div></div>
+              <div><div class="chn">Oceanix Support</div><div class="cho">Online now</div></div>
             </div>
             <div class="chat-msgs" id="chatMessages">
               <div class="msg them"><div class="mb">Hey! Welcome to Oceanix 🙏</div><div class="mt-c">Now</div></div>
@@ -613,49 +656,185 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
         </div>
       </div>
     </div>
- 
-    <!-- PROFILE -->
+
+    <!-- PROFILE (NEW DUAL MODE) -->
     <div class="page" id="p-profile">
-      <div class="profile-grid">
-        <div class="prof-l">
-          <div class="pav-wrap">
-            <div class="pav" id="profileAvatar">😎</div>
-            <div class="ponline"></div>
-          </div>
-          <div>
-            <div class="pname" id="profileName">Your Name</div>
-            <div class="phandle" id="profileHandle">@handle · Fan since 2025</div>
-          </div>
-          <div class="pstats">
-            <div class="ps"><div class="psv" id="profileCreators">0</div><div class="psk">Treats</div></div>
-            <div class="ps"><div class="psv" id="profileTreats">₹0</div><div class="psk">Spent</div></div>
-            <div class="ps"><div class="psv">4</div><div class="psk">Badges</div></div>
-            <div class="ps"><div class="psv">🔥</div><div class="psk">Active</div></div>
-          </div>
-          <p class="pbio">Passionate fan supporting Indian creators.</p>
-          <div class="pbadges">
-            <span class="pbdg pg">👑 Top Fan</span>
-            <span class="pbdg ptl">🌊 Ocean Member</span>
-            <span class="pbdg prst">🔥 Super Supporter</span>
-          </div>
-          <div class="pacts">
-            <button class="pact pa1">✏️ Edit Profile</button>
-            <button class="pact pa2">⚙️ Settings</button>
-            <button class="pact pa2" onclick="signOut()">❓ Sign Out</button>
+      <!-- HERO -->
+      <div class="prof-hero">
+        <div class="prof-hero-blob1"></div>
+        <div class="prof-hero-blob2"></div>
+        <div class="prof-av-wrap">
+          <div class="prof-av" id="profAvatar">😎</div>
+          <div class="prof-online"></div>
+        </div>
+        <div class="prof-info">
+          <div class="prof-name" id="profName">Your Name</div>
+          <div class="prof-email" id="profEmail">email@example.com</div>
+          <div class="prof-badges">
+            <span class="pbdg pbdg-fan">🌊 Fan</span>
+            <span class="pbdg pbdg-gold" id="creatorBadge" style="display:none;">🎙️ Creator</span>
+            <span class="pbdg pbdg-gold">👑 Top Fan</span>
           </div>
         </div>
-        <div class="prof-r">
-          <h2 class="sect-title-sm">Your Treat Feed 🌊</h2>
-          <p class="sect-sub">Creators you've treated recently</p>
-          <div class="feed" id="treatFeed">
-            <div style="text-align:center;padding:32px;color:var(--muted);font-size:0.82rem;">No treats yet. Send your first one! 🎁</div>
+        <div class="prof-actions-top">
+          <button class="prof-edit-btn">✏️ Edit Profile</button>
+          <button class="prof-signout-btn" onclick="signOut()">Sign Out</button>
+        </div>
+      </div>
+
+      <!-- MODE TABS -->
+      <div class="mode-tabs-wrap">
+        <div class="mode-tabs">
+          <button class="mode-tab active-fan" id="fanTab" onclick="switchMode('fan')">
+            <span class="mode-tab-icon">🌊</span> Fan Mode
+          </button>
+          <button class="mode-tab" id="creatorTab" onclick="switchMode('creator')">
+            <span class="mode-tab-icon">🎙️</span> Creator Mode
+          </button>
+        </div>
+      </div>
+
+      <!-- FAN PANEL -->
+      <div class="mode-panel active" id="fanPanel">
+        <div class="fan-stats-grid">
+          <div class="fan-stat">
+            <span class="fan-stat-icon">🎁</span>
+            <span class="fan-stat-val" id="fanTreatsCount">0</span>
+            <span class="fan-stat-key">Treats Sent</span>
+          </div>
+          <div class="fan-stat">
+            <span class="fan-stat-icon">💸</span>
+            <span class="fan-stat-val" id="fanTotalSpent">₹0</span>
+            <span class="fan-stat-key">Total Spent</span>
+          </div>
+          <div class="fan-stat">
+            <span class="fan-stat-icon">❤️</span>
+            <span class="fan-stat-val" id="fanFollowingCount">0</span>
+            <span class="fan-stat-key">Following</span>
+          </div>
+          <div class="fan-stat">
+            <span class="fan-stat-icon">🏅</span>
+            <span class="fan-stat-val">3</span>
+            <span class="fan-stat-key">Badges</span>
+          </div>
+        </div>
+
+        <div class="fan-two-col">
+          <div class="fan-section">
+            <div class="fan-section-title">❤️ Following</div>
+            <div class="fan-section-sub">Creators you support</div>
+            <div class="following-list" id="followingList">
+              <div style="text-align:center;padding:20px;color:rgba(255,255,255,0.3);font-size:0.78rem;">
+                Follow creators from the Browse page!
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="fan-section" style="margin-bottom:16px;">
+              <div class="fan-section-title">🎁 Recent Treats</div>
+              <div class="fan-section-sub">Your treat history</div>
+              <div class="treat-hist-list" id="fanTreatHistory">
+                <div style="text-align:center;padding:16px;color:rgba(255,255,255,0.3);font-size:0.78rem;">No treats yet!</div>
+              </div>
+            </div>
+            <div class="fan-section">
+              <div class="fan-section-title">🏅 Your Badges</div>
+              <div class="fan-section-sub">Earned achievements</div>
+              <div class="badge-grid">
+                <div class="badge-item"><span class="badge-icon">👑</span><div><div class="badge-name">Top Fan</div><div class="badge-desc">Treated 5+ creators</div></div></div>
+                <div class="badge-item"><span class="badge-icon">🌊</span><div><div class="badge-name">Ocean Fan</div><div class="badge-desc">Sent ₹999 treat</div></div></div>
+                <div class="badge-item"><span class="badge-icon">🔥</span><div><div class="badge-name">Super Fan</div><div class="badge-desc">Active supporter</div></div></div>
+                <div class="badge-item" style="opacity:0.35;"><span class="badge-icon">💎</span><div><div class="badge-name">Diamond Fan</div><div class="badge-desc">Locked — ₹5000+</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CREATOR PANEL -->
+      <div class="mode-panel" id="creatorPanel">
+        <!-- Not set up state -->
+        <div id="creatorNotSetup" class="creator-not-setup">
+          <span class="creator-not-setup-emoji">🎙️</span>
+          <div class="creator-not-setup-title">Start Your Creator Journey</div>
+          <div class="creator-not-setup-sub">Set up your creator page and start receiving treats from your fans. It only takes 2 minutes!</div>
+          <button class="become-creator-btn" onclick="openCreatorSetup()">🚀 Become a Creator</button>
+        </div>
+
+        <!-- Set up state -->
+        <div id="creatorSetupDone" style="display:none;">
+          <div class="creator-stats-grid">
+            <div class="creator-stat">
+              <span class="creator-stat-icon">💰</span>
+              <span class="creator-stat-val" id="creatorEarned">₹0</span>
+              <span class="creator-stat-key">Total Earned</span>
+            </div>
+            <div class="creator-stat">
+              <span class="creator-stat-icon">🎁</span>
+              <span class="creator-stat-val" id="creatorTreatsCount">0</span>
+              <span class="creator-stat-key">Treats Received</span>
+            </div>
+            <div class="creator-stat">
+              <span class="creator-stat-icon">👥</span>
+              <span class="creator-stat-val" id="creatorFollowersCount">0</span>
+              <span class="creator-stat-key">Followers</span>
+            </div>
+            <div class="creator-stat">
+              <span class="creator-stat-icon">⭐</span>
+              <span class="creator-stat-val">4.9</span>
+              <span class="creator-stat-key">Rating</span>
+            </div>
+          </div>
+
+          <div class="creator-two-col">
+            <div class="creator-section">
+              <div class="creator-section-title">📈 Earnings Overview</div>
+              <div class="creator-section-sub">Last 7 days</div>
+              <div class="earn-chart" id="earnChart">
+                <div class="earn-bar-wrap"><div class="earn-bar" style="height:30%"></div><div class="earn-bar-label">Mon</div></div>
+                <div class="earn-bar-wrap"><div class="earn-bar" style="height:55%"></div><div class="earn-bar-label">Tue</div></div>
+                <div class="earn-bar-wrap"><div class="earn-bar" style="height:40%"></div><div class="earn-bar-label">Wed</div></div>
+                <div class="earn-bar-wrap"><div class="earn-bar" style="height:80%"></div><div class="earn-bar-label">Thu</div></div>
+                <div class="earn-bar-wrap"><div class="earn-bar" style="height:60%"></div><div class="earn-bar-label">Fri</div></div>
+                <div class="earn-bar-wrap"><div class="earn-bar" style="height:90%"></div><div class="earn-bar-label">Sat</div></div>
+                <div class="earn-bar-wrap"><div class="earn-bar" style="height:70%"></div><div class="earn-bar-label">Sun</div></div>
+              </div>
+              <div class="earn-total" id="creatorWeekEarned">₹0</div>
+              <div class="earn-sub">This week</div>
+            </div>
+            <div>
+              <div class="creator-section" style="margin-bottom:16px;">
+                <div class="creator-section-title">👥 Recent Followers</div>
+                <div class="creator-section-sub">Your supporters</div>
+                <div class="followers-list" id="followersList">
+                  <div style="text-align:center;padding:16px;color:rgba(168,85,247,0.5);font-size:0.78rem;">No followers yet — share your page!</div>
+                </div>
+              </div>
+              <div class="creator-section">
+                <div class="creator-section-title">📋 Your Creator Page</div>
+                <div class="creator-section-sub">Page details</div>
+                <div class="page-info-field">
+                  <span class="page-info-label">Creator Name</span>
+                  <span class="page-info-val" id="creatorPageName">—</span>
+                </div>
+                <div class="page-info-field">
+                  <span class="page-info-label">Category</span>
+                  <span class="page-info-val" id="creatorPageCat">—</span>
+                </div>
+                <div class="page-info-field">
+                  <span class="page-info-label">Username</span>
+                  <span class="page-info-val" id="creatorPageUsername">—</span>
+                </div>
+                <button class="edit-page-btn" onclick="openCreatorSetup()">✏️ Edit Creator Page</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </main>
 </div>
- 
+
 <!-- SEND TREAT MODAL -->
 <div class="modal-overlay" id="treatModal">
   <div class="modal-box">
@@ -669,33 +848,17 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
       </div>
     </div>
     <div class="modal-tiers">
-      <div class="modal-tier" onclick="selectModalTier(this,'Chai Treat','☕',29)">
-        <span class="modal-tier-emoji">☕</span>
-        <div class="modal-tier-price">₹29</div>
-        <div class="modal-tier-name">Chai</div>
-      </div>
-      <div class="modal-tier" onclick="selectModalTier(this,'Snack Treat','🍕',99)">
-        <span class="modal-tier-emoji">🍕</span>
-        <div class="modal-tier-price">₹99</div>
-        <div class="modal-tier-name">Snack</div>
-      </div>
-      <div class="modal-tier" onclick="selectModalTier(this,'Dinner Treat','🎂',299)">
-        <span class="modal-tier-emoji">🎂</span>
-        <div class="modal-tier-price">₹299</div>
-        <div class="modal-tier-name">Dinner</div>
-      </div>
-      <div class="modal-tier" onclick="selectModalTier(this,'Ocean Treat','💎',999)">
-        <span class="modal-tier-emoji">💎</span>
-        <div class="modal-tier-price">₹999</div>
-        <div class="modal-tier-name">Ocean</div>
-      </div>
+      <div class="modal-tier" onclick="selectModalTier(this,'Chai Treat','☕',29)"><span class="modal-tier-emoji">☕</span><div class="modal-tier-price">₹29</div><div class="modal-tier-name">Chai</div></div>
+      <div class="modal-tier" onclick="selectModalTier(this,'Snack Treat','🍕',99)"><span class="modal-tier-emoji">🍕</span><div class="modal-tier-price">₹99</div><div class="modal-tier-name">Snack</div></div>
+      <div class="modal-tier" onclick="selectModalTier(this,'Dinner Treat','🎂',299)"><span class="modal-tier-emoji">🎂</span><div class="modal-tier-price">₹299</div><div class="modal-tier-name">Dinner</div></div>
+      <div class="modal-tier" onclick="selectModalTier(this,'Ocean Treat','💎',999)"><span class="modal-tier-emoji">💎</span><div class="modal-tier-price">₹999</div><div class="modal-tier-name">Ocean</div></div>
     </div>
     <textarea class="modal-msg-input" id="modalMessage" placeholder="Write a message to the creator... (optional)" rows="2"></textarea>
     <button class="modal-send-btn" id="modalSendBtn" onclick="confirmTreat()">Send Treat 🎁</button>
     <button class="modal-cancel" onclick="closeModal()">Cancel</button>
   </div>
 </div>
- 
+
 <!-- MOBILE NAV -->
 <div class="mob">
   <div class="mob-items">
@@ -706,13 +869,13 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
     <button class="mob-btn" onclick="go('profile',4)"><span class="mob-ic">👤</span><span class="mob-lb">Profile</span></button>
   </div>
 </div>
- 
+
 <!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut as fbSignOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, query, where, serverTimestamp, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
- 
+import { getFirestore, collection, addDoc, getDocs, query, where, serverTimestamp, doc, setDoc, getDoc, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyBxxtwrHEu6DQm5pqc2UY3lTafF8iwktAU",
   authDomain: "oceanix-3f40d.firebaseapp.com",
@@ -721,41 +884,42 @@ const firebaseConfig = {
   messagingSenderId: "637904488512",
   appId: "1:637904488512:web:51b30800d3bc1fa8ebf7a5"
 };
- 
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 let currentUser = null;
-let currentRole = null;
-let selectedRole = null;
- 
-// AUTH STATE
+let allCreators = [];
+let selectedCreatorUid = null;
+let selectedTreatData = null;
+let creatorData = null;
+
+// AUTH STATE — single account, no role selection
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     currentUser = user;
     document.getElementById('authOverlay').classList.add('hide');
-    const userRef = doc(db, 'users', user.uid);
-    const snap = await getDoc(userRef);
-    if (!snap.exists() || !snap.data().role) {
-      document.getElementById('roleOverlay').classList.add('show');
-    } else {
-      const data = snap.data();
-      currentRole = data.role;
-      updateUI(user, data);
-      await loadUserTreats(user.uid);
-      await loadCreators();
-      renderCreators(allCreators);
-    }
+    // Upsert user doc (no role field needed)
+    await setDoc(doc(db, 'users', user.uid), {
+      uid: user.uid,
+      name: user.displayName,
+      email: user.email,
+      photo: user.photoURL,
+      joinedAt: serverTimestamp()
+    }, { merge: true });
+    updateSidebarUI(user);
+    updateProfileHero(user);
+    await loadUserTreats(user.uid);
+    await loadCreators();
+    await loadCreatorData(user.uid);
   } else {
     currentUser = null;
-    currentRole = null;
     document.getElementById('authOverlay').classList.remove('hide');
-    document.getElementById('roleOverlay').classList.remove('show');
     document.getElementById('setupOverlay').classList.remove('show');
   }
 });
- 
+
 // SIGN IN
 window._signInWithGoogle = async () => {
   const btn = document.getElementById('googleSignInBtn');
@@ -766,53 +930,31 @@ window._signInWithGoogle = async () => {
   } catch(e) {
     showToast('Sign in failed. Try again.');
     btn.disabled = false;
-    btn.innerHTML = '<svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg> Continue with Google';
+    btn.innerHTML = `<svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg> Continue with Google`;
   }
 };
- 
+
 // SIGN OUT
 window._signOut = async () => {
   await fbSignOut(auth);
   showToast('Signed out. See you soon! 👋');
 };
- 
-// ROLE SELECTION
-window.selectRole = (role) => {
-  selectedRole = role;
-  document.getElementById('fanCard').classList.toggle('selected', role === 'fan');
-  document.getElementById('creatorCard').classList.toggle('selected', role === 'creator');
-  const btn = document.getElementById('roleBtn');
-  btn.classList.add('ready');
-  btn.textContent = role === 'fan' ? '🌊 Continue as Fan →' : '🎙️ Continue as Creator →';
-};
- 
-window.confirmRole = async () => {
-  if (!selectedRole || !currentUser) return;
-  const btn = document.getElementById('roleBtn');
-  btn.textContent = 'Saving...';
-  btn.classList.remove('ready');
-  await setDoc(doc(db, 'users', currentUser.uid), {
-    uid: currentUser.uid,
-    name: currentUser.displayName,
-    email: currentUser.email,
-    photo: currentUser.photoURL,
-    role: selectedRole,
-    joinedAt: serverTimestamp(),
-    totalSpent: 0
-  }, { merge: true });
-  currentRole = selectedRole;
-  document.getElementById('roleOverlay').classList.remove('show');
-  if (selectedRole === 'creator') {
-    document.getElementById('setupName').value = currentUser.displayName || '';
-    document.getElementById('setupOverlay').classList.add('show');
-  } else {
-    updateUI(currentUser, { role: 'fan' });
-    await loadUserTreats(currentUser.uid);
-    await loadCreators();
-  }
-};
- 
+
 // CREATOR SETUP
+window.openCreatorSetup = () => {
+  if (!currentUser) { showToast('Please sign in first!'); return; }
+  if (creatorData) {
+    document.getElementById('setupName').value = creatorData.name || '';
+    document.getElementById('setupUsername').value = creatorData.username || '';
+    document.getElementById('setupCategory').value = creatorData.category || '';
+    document.getElementById('setupBio').value = creatorData.bio || '';
+    document.getElementById('setupUpi').value = creatorData.upi || '';
+  } else {
+    document.getElementById('setupName').value = currentUser.displayName || '';
+  }
+  document.getElementById('setupOverlay').classList.add('show');
+};
+
 window._saveCreatorProfile = async () => {
   const name = document.getElementById('setupName').value.trim();
   const username = document.getElementById('setupUsername').value.trim().toLowerCase().replace(/[^a-z0-9_]/g,'');
@@ -821,110 +963,146 @@ window._saveCreatorProfile = async () => {
   const upi = document.getElementById('setupUpi').value.trim();
   if (!name || !username || !category) { showToast('Fill name, username & category!'); return; }
   const btn = document.getElementById('setupBtn');
-  btn.disabled = true; btn.textContent = 'Launching...';
+  btn.disabled = true; btn.textContent = 'Saving...';
   try {
     await setDoc(doc(db, 'creators', currentUser.uid), {
       uid: currentUser.uid, name, username, category, bio, upi,
       photo: currentUser.photoURL, totalEarned: 0, totalTreats: 0,
       createdAt: serverTimestamp()
-    });
+    }, { merge: true });
     document.getElementById('setupOverlay').classList.remove('show');
-    updateUI(currentUser, { role: 'creator', name, category });
-    showToast('🎉 Your creator page is live!');
+    showToast('🎉 Creator page saved!');
     await loadCreators();
+    await loadCreatorData(currentUser.uid);
+    btn.disabled = false; btn.textContent = '🚀 Launch My Creator Page';
   } catch(e) {
-    showToast('Error saving profile.');
+    showToast('Error saving. Try again.');
     btn.disabled = false; btn.textContent = '🚀 Launch My Creator Page';
   }
 };
- 
-// SEND TREAT
-window._sendTreat = async (name, emoji, amount) => {
-  if (!currentUser) { showToast('Please sign in first!'); return; }
+
+// LOAD CREATOR DATA (for the logged-in user's creator profile)
+async function loadCreatorData(uid) {
   try {
-    await addDoc(collection(db, 'treats'), {
-      userId: currentUser.uid, userName: currentUser.displayName,
-      treatName: name, emoji, amount, createdAt: serverTimestamp()
-    });
-    showToast(emoji + ' ' + name + ' sent! ₹' + amount + ' 🎉');
-    await loadUserTreats(currentUser.uid);
-  } catch(e) { showToast('Something went wrong.'); }
-};
- 
-// LOAD TREATS
+    const snap = await getDoc(doc(db, 'creators', uid));
+    if (snap.exists()) {
+      creatorData = snap.data();
+      document.getElementById('creatorNotSetup').style.display = 'none';
+      document.getElementById('creatorSetupDone').style.display = 'block';
+      document.getElementById('creatorBadge').style.display = 'inline-flex';
+      document.getElementById('creatorPageName').textContent = creatorData.name || '—';
+      document.getElementById('creatorPageCat').textContent = creatorData.category || '—';
+      document.getElementById('creatorPageUsername').textContent = '@' + (creatorData.username || '—');
+      document.getElementById('creatorEarned').textContent = '₹' + (creatorData.totalEarned || 0).toLocaleString('en-IN');
+      document.getElementById('creatorTreatsCount').textContent = creatorData.totalTreats || 0;
+      // Load treats received as creator
+      const tq = query(collection(db, 'treats'), where('toCreatorUid','==',uid));
+      const tsnap = await getDocs(tq);
+      document.getElementById('creatorTreatsCount').textContent = tsnap.size;
+      const weekEarned = tsnap.docs.reduce((s,d) => s + (d.data().amount||0), 0);
+      document.getElementById('creatorWeekEarned').textContent = '₹' + weekEarned.toLocaleString('en-IN');
+      document.getElementById('creatorEarned').textContent = '₹' + weekEarned.toLocaleString('en-IN');
+    } else {
+      creatorData = null;
+      document.getElementById('creatorNotSetup').style.display = 'block';
+      document.getElementById('creatorSetupDone').style.display = 'none';
+      document.getElementById('creatorBadge').style.display = 'none';
+    }
+  } catch(e) { console.log('Creator data error:', e); }
+}
+
+// LOAD TREATS (fan view)
 async function loadUserTreats(uid) {
   try {
     const q = query(collection(db, 'treats'), where('userId','==',uid));
     const snap = await getDocs(q);
     const treats = snap.docs.map(d => d.data()).sort((a,b) => (b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
     const total = treats.reduce((s,t) => s+(t.amount||0), 0);
+    // History page
     document.getElementById('totalSpent').textContent = '₹' + total.toLocaleString('en-IN');
     document.getElementById('totalCreators').textContent = treats.length;
-    document.getElementById('profileTreats').textContent = total >= 1000 ? '₹'+(total/1000).toFixed(1)+'K' : '₹'+total;
-    document.getElementById('profileCreators').textContent = treats.length;
+    // Fan stats
+    document.getElementById('fanTreatsCount').textContent = treats.length;
+    document.getElementById('fanTotalSpent').textContent = total >= 1000 ? '₹'+(total/1000).toFixed(1)+'K' : '₹'+total;
+    // History list
     const list = document.getElementById('treatHistoryList');
-    if (treats.length === 0) {
-      list.innerHTML = '<div style="text-align:center;padding:32px;color:var(--muted);font-size:0.82rem;">No treats sent yet. Go send your first one! 🎁</div>';
-    } else {
-      list.innerHTML = treats.slice(0,6).map(t => {
-        const time = t.createdAt ? new Date(t.createdAt.seconds*1000).toLocaleString('en-IN',{dateStyle:'short',timeStyle:'short'}) : 'Just now';
-        return `<div class="hrow"><div class="hav" style="background:linear-gradient(135deg,#667eea,#764ba2)">${t.emoji}</div><div><span class="hn">${t.treatName}</span><span class="ht-s">${time}</span></div><span class="hamt">${t.emoji} ₹${t.amount}</span><span class="hbdg">Sent</span></div>`;
-      }).join('');
-    }
-    const feed = document.getElementById('treatFeed');
-    if (treats.length > 0) {
-      feed.innerHTML = treats.slice(0,3).map(t => {
-        const time = t.createdAt ? new Date(t.createdAt.seconds*1000).toLocaleString('en-IN',{dateStyle:'short',timeStyle:'short'}) : 'Just now';
-        return `<div class="fcard"><div class="fav" style="background:linear-gradient(135deg,#667eea,#764ba2)">${t.emoji}</div><div><div class="ftop"><span class="fn">${t.treatName}</span><span class="ftag">You sent</span></div><div class="fti">${time}</div></div><div class="famount"><div class="fval">₹${t.amount}</div><div class="ftype">${t.emoji}</div></div></div>`;
-      }).join('');
-    }
-  } catch(e) { console.log('Load error:', e); }
+    list.innerHTML = treats.length === 0
+      ? '<div style="text-align:center;padding:32px;color:var(--muted);font-size:0.82rem;">No treats sent yet 🎁</div>'
+      : treats.slice(0,6).map(t => {
+          const time = t.createdAt ? new Date(t.createdAt.seconds*1000).toLocaleString('en-IN',{dateStyle:'short',timeStyle:'short'}) : 'Just now';
+          return `<div class="hrow"><div class="hav" style="background:linear-gradient(135deg,#667eea,#764ba2)">${t.emoji}</div><div><span class="hn">${t.treatName}</span><span class="ht-s">${time}</span></div><span class="hamt">${t.emoji} ₹${t.amount}</span><span class="hbdg">Sent</span></div>`;
+        }).join('');
+    // Fan treat history panel
+    const fth = document.getElementById('fanTreatHistory');
+    fth.innerHTML = treats.length === 0
+      ? '<div style="text-align:center;padding:16px;color:rgba(255,255,255,0.3);font-size:0.78rem;">No treats yet!</div>'
+      : treats.slice(0,4).map(t => `
+        <div class="treat-hist-item">
+          <span class="thi-emoji">${t.emoji}</span>
+          <div><div class="thi-name">${t.treatName}</div><div class="thi-time">${t.createdAt ? new Date(t.createdAt.seconds*1000).toLocaleDateString('en-IN') : 'Just now'}</div></div>
+          <span class="thi-amt">₹${t.amount}</span>
+        </div>`).join('');
+  } catch(e) { console.log('Load treats error:', e); }
 }
- 
+
 // LOAD CREATORS
-let allCreators = [];
-let selectedCreatorUid = null;
-let selectedTreatData = null;
- 
 window._loadCreators = async function() {
   try {
     const snap = await getDocs(collection(db, 'creators'));
     allCreators = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     renderCreators(allCreators);
     renderHomeCards(allCreators);
+    // Following list (creators the user has treated)
+    updateFollowingList();
   } catch(e) {
-    console.log('Load creators error:', e);
-    const grid = document.getElementById('creatorGrid');
-    if(grid) grid.innerHTML = '<div class="no-creators"><span class="no-creators-emoji">⚠️</span>Error loading. Please refresh.</div>';
+    document.getElementById('creatorGrid').innerHTML = '<div class="no-creators"><span class="no-creators-emoji">⚠️</span>Error loading. Please refresh.</div>';
   }
 };
 
-async function loadCreators() {
-  return window._loadCreators();
+async function loadCreators() { return window._loadCreators(); }
+
+function updateFollowingList() {
+  // Show all creators as "following" for now (can be refined with a follows collection)
+  const list = document.getElementById('followingList');
+  const catEmojis = {Tech:'💻',Gaming:'🎮',Finance:'📈',Art:'🎨',Music:'🎵',Comedy:'😂',Education:'📚',Fitness:'💪',Food:'🍳',Podcast:'🎙️',Other:'✨'};
+  const gradients = ['linear-gradient(135deg,#667eea,#764ba2)','linear-gradient(135deg,#f093fb,#f5576c)','linear-gradient(135deg,#43e97b,#38f9d7)','linear-gradient(135deg,#4facfe,#00f2fe)'];
+  if (allCreators.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:20px;color:rgba(255,255,255,0.3);font-size:0.78rem;">Follow creators from the Browse page!</div>';
+    document.getElementById('fanFollowingCount').textContent = 0;
+    return;
+  }
+  document.getElementById('fanFollowingCount').textContent = allCreators.length;
+  list.innerHTML = allCreators.slice(0,5).map((c,i) => `
+    <div class="following-item" onclick="openTreatModal('${c.id}','${(c.name||'').replace(/'/g,"\\'")}','${c.category||''}','${c.photo||''}')">
+      <div class="following-av" style="background:${gradients[i%4]}">${c.photo ? `<img src="${c.photo}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">` : (catEmojis[c.category]||'🎙️')}</div>
+      <div>
+        <div class="following-name">${c.name||'Creator'}</div>
+        <span class="following-cat">${catEmojis[c.category]||'✨'} ${c.category||'Creator'}</span>
+      </div>
+      <button class="following-treat-btn" onclick="event.stopPropagation();openTreatModal('${c.id}','${(c.name||'').replace(/'/g,"\\'")}','${c.category||''}','${c.photo||''}')">Treat</button>
+    </div>`).join('');
 }
- 
+
 function renderCreators(creators) {
   const grid = document.getElementById('creatorGrid');
   if (!grid) return;
   const catEmojis = {Tech:'💻',Gaming:'🎮',Finance:'📈',Art:'🎨',Music:'🎵',Comedy:'😂',Education:'📚',Fitness:'💪',Food:'🍳',Podcast:'🎙️',Other:'✨'};
   if (!creators || creators.length === 0) {
-    grid.innerHTML = '<div class="no-creators"><span class="no-creators-emoji">🎙️</span>No creators yet!<br>Be the first to join as a Creator!</div>';
+    grid.innerHTML = '<div class="no-creators"><span class="no-creators-emoji">🎙️</span>No creators yet!<br>Be the first to join!</div>';
     return;
   }
   grid.innerHTML = creators.map(c => {
-    const safeName = (c.name||'').replace(/'/g,"\\'");
-    const safePhoto = (c.photo||'');
-    return `
-    <div class="creator-card" onclick="openTreatModal('${c.id}','${safeName}','${c.category||''}','${safePhoto}')">
+    const safe = (c.name||'').replace(/'/g,"\\'");
+    return `<div class="creator-card" onclick="openTreatModal('${c.id}','${safe}','${c.category||''}','${c.photo||''}')">
       <div class="creator-av">${c.photo ? `<img src="${c.photo}" alt="">` : (catEmojis[c.category]||'🎙️')}</div>
       <div class="creator-name">${c.name||'Creator'}</div>
       <span class="creator-cat">${catEmojis[c.category]||'✨'} ${c.category||'Creator'}</span>
       <p class="creator-bio">${c.bio||'Creating amazing content for you!'}</p>
-      <button class="creator-treat-btn" onclick="event.stopPropagation();openTreatModal('${c.id}','${safeName}','${c.category||''}','${safePhoto}')">Send a Treat 🎁</button>
+      <button class="creator-treat-btn" onclick="event.stopPropagation();openTreatModal('${c.id}','${safe}','${c.category||''}','${c.photo||''}')">Send a Treat 🎁</button>
     </div>`;
   }).join('');
 }
- 
+
 function renderHomeCards(creators) {
   const cards = document.getElementById('homeCreatorCards');
   if (!cards) return;
@@ -935,22 +1113,21 @@ function renderHomeCards(creators) {
     return;
   }
   cards.innerHTML = creators.slice(0,4).map((c,i) => {
-    const safeName = (c.name||'').replace(/'/g,"\\'");
-    return `
-    <div class="ccard" onclick="openTreatModal('${c.id}','${safeName}','${c.category||''}','${c.photo||''}')">
+    const safe = (c.name||'').replace(/'/g,"\\'");
+    return `<div class="ccard" onclick="openTreatModal('${c.id}','${safe}','${c.category||''}','${c.photo||''}')">
       <div class="cav" style="background:${gradients[i%4]}">${c.photo ? `<img src="${c.photo}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">` : (catEmojis[c.category]||'🎙️')}</div>
       <div><span class="cn">${c.name||'Creator'}</span><span class="cc">${c.category||'Creator'}</span></div>
       <span class="ca">₹29+</span>
     </div>`;
   }).join('');
 }
- 
-window.filterCreators = (cat) => {
+
+window.filterCreators = (cat, e) => {
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
+  if (e && e.target) e.target.classList.add('active');
   renderCreators(cat === 'all' ? allCreators : allCreators.filter(c => c.category === cat));
 };
- 
+
 window.openTreatModal = (uid, name, category, photo) => {
   if (!currentUser) { showToast('Please sign in first!'); return; }
   selectedCreatorUid = uid;
@@ -964,93 +1141,108 @@ window.openTreatModal = (uid, name, category, photo) => {
   document.getElementById('modalSendBtn').textContent = 'Send Treat 🎁';
   document.getElementById('treatModal').classList.add('show');
 };
- 
+
 window.selectModalTier = (el, name, emoji, amount) => {
   document.querySelectorAll('.modal-tier').forEach(t => t.classList.remove('selected'));
   el.classList.add('selected');
   selectedTreatData = { name, emoji, amount };
   document.getElementById('modalSendBtn').textContent = `Send ${emoji} ₹${amount}`;
 };
- 
+
 window.closeModal = () => {
   document.getElementById('treatModal').classList.remove('show');
-  selectedCreatorUid = null;
-  selectedTreatData = null;
+  selectedCreatorUid = null; selectedTreatData = null;
 };
- 
+
 window.confirmTreat = async () => {
-  if (!selectedTreatData) { showToast('👆 Please select a treat tier first!'); return; }
+  if (!selectedTreatData) { showToast('👆 Select a treat tier first!'); return; }
   if (!selectedCreatorUid) { showToast('No creator selected!'); return; }
   if (!currentUser) { showToast('Please sign in!'); return; }
   const message = document.getElementById('modalMessage').value.trim();
   try {
     const creatorSnap = await getDoc(doc(db, 'creators', selectedCreatorUid));
-    const creatorData = creatorSnap.data();
-    const paymentLink = creatorData?.paymentLink;
-    if (!paymentLink) {
-      showToast('Creator has not set up payments yet!');
-      return;
-    }
+    const cdata = creatorSnap.data();
+    const paymentLink = cdata?.paymentLink;
+    if (!paymentLink) { showToast('Creator has not set up payments yet!'); return; }
     await addDoc(collection(db, 'treats'), {
-      userId: currentUser.uid,
-      userName: currentUser.displayName,
+      userId: currentUser.uid, userName: currentUser.displayName,
       toCreatorUid: selectedCreatorUid,
-      treatName: selectedTreatData.name,
-      emoji: selectedTreatData.emoji,
-      amount: selectedTreatData.amount,
-      message: message,
-      status: 'pending',
+      treatName: selectedTreatData.name, emoji: selectedTreatData.emoji,
+      amount: selectedTreatData.amount, message, status: 'pending',
       createdAt: serverTimestamp()
     });
     closeModal();
     showToast(selectedTreatData.emoji + ' Redirecting to payment... 💳');
     setTimeout(() => { window.open(paymentLink, '_blank'); }, 800);
     await loadUserTreats(currentUser.uid);
-  } catch(e) {
-    console.log('Payment error full:', e.message, e.code, e);
-    showToast('Error: ' + (e.message || 'Try again!'));
-  }
+  } catch(e) { showToast('Error: ' + (e.message || 'Try again!')); }
 };
- 
-// SEND MESSAGE
+
+window._sendTreat = async (name, emoji, amount) => {
+  if (!currentUser) { showToast('Please sign in first!'); return; }
+  try {
+    await addDoc(collection(db, 'treats'), {
+      userId: currentUser.uid, userName: currentUser.displayName,
+      treatName: name, emoji, amount, createdAt: serverTimestamp()
+    });
+    showToast(emoji + ' ' + name + ' sent! ₹' + amount + ' 🎉');
+    await loadUserTreats(currentUser.uid);
+  } catch(e) { showToast('Something went wrong.'); }
+};
+
 window._sendMessage = async () => {
   const input = document.getElementById('chatInput');
   const text = input.value.trim();
-  if (!text) return;
-  if (!currentUser) { showToast('Please sign in first!'); return; }
+  if (!text || !currentUser) return;
   const msgs = document.getElementById('chatMessages');
   const now = new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
   msgs.innerHTML += `<div class="msg me"><div class="mb">${text}</div><div class="mt-c">${now}</div></div>`;
   msgs.scrollTop = msgs.scrollHeight;
   input.value = '';
-  try {
-    await addDoc(collection(db, 'messages'), { userId: currentUser.uid, text, createdAt: serverTimestamp() });
-  } catch(e) {}
+  try { await addDoc(collection(db, 'messages'), { userId: currentUser.uid, text, createdAt: serverTimestamp() }); } catch(e){}
 };
- 
-// UPDATE UI
-function updateUI(user, userData={}) {
-  const role = userData.role || 'fan';
-  const firstName = user.displayName?.split(' ')[0] || 'User';
+
+function updateSidebarUI(user) {
   document.getElementById('sidebarUser').style.display = 'flex';
-  const nameEl = document.getElementById('sidebarName');
-  nameEl.innerHTML = firstName + (role === 'creator' ? '<span class="creator-badge">Creator</span>' : '');
+  document.getElementById('sidebarName').textContent = user.displayName?.split(' ')[0] || 'User';
   const av = document.getElementById('sidebarAvatar');
   if (user.photoURL) {
     av.outerHTML = `<img class="user-bar-av" id="sidebarAvatar" src="${user.photoURL}" alt="av">`;
   } else {
     av.textContent = (user.displayName||'U')[0].toUpperCase();
   }
-  document.getElementById('profileName').textContent = user.displayName || 'User';
-  document.getElementById('profileHandle').textContent = `@${(user.displayName||'user').toLowerCase().replace(/ /g,'_')} · ${role === 'creator' ? 'Creator 🎙️' : 'Fan since ' + new Date().getFullYear()}`;
-  const profileAv = document.getElementById('profileAvatar');
-  if (user.photoURL && profileAv) profileAv.innerHTML = `<img src="${user.photoURL}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
   const joinBtn = document.getElementById('joinBtn');
-  if (joinBtn) joinBtn.textContent = role === 'creator' ? `🎙️ Hey, ${firstName}!` : `👋 Hey, ${firstName}!`;
+  if (joinBtn) joinBtn.textContent = `👋 Hey, ${user.displayName?.split(' ')[0] || 'User'}!`;
 }
+
+function updateProfileHero(user) {
+  document.getElementById('profName').textContent = user.displayName || 'User';
+  document.getElementById('profEmail').textContent = user.email || '';
+  const av = document.getElementById('profAvatar');
+  if (user.photoURL && av) av.innerHTML = `<img src="${user.photoURL}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+}
+
+// MODE SWITCH
+window.switchMode = (mode) => {
+  const fanTab = document.getElementById('fanTab');
+  const creatorTab = document.getElementById('creatorTab');
+  const fanPanel = document.getElementById('fanPanel');
+  const creatorPanel = document.getElementById('creatorPanel');
+  if (mode === 'fan') {
+    fanTab.className = 'mode-tab active-fan';
+    creatorTab.className = 'mode-tab';
+    fanPanel.classList.add('active');
+    creatorPanel.classList.remove('active');
+  } else {
+    creatorTab.className = 'mode-tab active-creator';
+    fanTab.className = 'mode-tab';
+    creatorPanel.classList.add('active');
+    fanPanel.classList.remove('active');
+  }
+};
 </script>
- 
-<!-- PAGE NAV + WRAPPERS -->
+
+<!-- NAV + WRAPPERS -->
 <script>
 const pages = ['home','browse','treats','history','profile'];
 
@@ -1061,71 +1253,54 @@ function go(id, idx) {
   document.querySelectorAll('.mob-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
   if (id === 'browse') {
     let tries = 0;
-    const tryLoad = setInterval(() => {
+    const t = setInterval(() => {
       tries++;
-      if (window._loadCreators) { clearInterval(tryLoad); window._loadCreators(); }
-      if (tries > 20) clearInterval(tryLoad);
+      if (window._loadCreators) { clearInterval(t); window._loadCreators(); }
+      if (tries > 20) clearInterval(t);
     }, 500);
   }
 }
 
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
+  t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-// ✅ FIXED: Retry loop so Firebase module has time to load before calling
+// ✅ FIXED: retry loop for Firebase module load timing
 function signInWithGoogle() {
   if (window._signInWithGoogle) {
     window._signInWithGoogle();
   } else {
     let tries = 0;
-    const trySign = setInterval(() => {
+    const t = setInterval(() => {
       tries++;
-      if (window._signInWithGoogle) {
-        clearInterval(trySign);
-        window._signInWithGoogle();
-      }
-      if (tries > 20) {
-        clearInterval(trySign);
-        showToast('Failed to load. Please refresh the page.');
-      }
+      if (window._signInWithGoogle) { clearInterval(t); window._signInWithGoogle(); }
+      if (tries > 20) { clearInterval(t); showToast('Failed to load. Please refresh.'); }
     }, 300);
   }
 }
 
 function signOut() {
-  if (window._signOut) {
-    window._signOut();
-  } else {
-    showToast('Loading...');
-  }
+  if (window._signOut) window._signOut();
+  else showToast('Loading...');
 }
 
 function sendTreat(n, e, a) {
-  if (window._sendTreat) {
-    window._sendTreat(n, e, a);
-  } else {
-    showToast('Please sign in first!');
-  }
+  if (window._sendTreat) window._sendTreat(n, e, a);
+  else showToast('Please sign in first!');
 }
 
 function sendMessage() {
   if (window._sendMessage) window._sendMessage();
 }
 
-function selectRole(r) {
-  if (window.selectRole) window.selectRole(r);
-}
-
-function confirmRole() {
-  if (window.confirmRole) window.confirmRole();
-}
-
 function saveCreatorProfile() {
   if (window._saveCreatorProfile) window._saveCreatorProfile();
+}
+
+function openCreatorSetup() {
+  if (window.openCreatorSetup) window.openCreatorSetup();
 }
 </script>
 </body>
