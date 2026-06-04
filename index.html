@@ -480,6 +480,10 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
       <label class="setup-label">UPI ID</label>
       <input class="setup-input" id="setupUpi" placeholder="e.g. yourname@upi" />
     </div>
+    <div class="setup-field">
+      <label class="setup-label">Razorpay / UPI Payment Link</label>
+      <input class="setup-input" id="setupPaymentLink" placeholder="e.g. https://rzp.io/l/yourlink" />
+    </div>
     <button class="setup-btn" id="setupBtn" onclick="saveCreatorProfile()">🚀 Launch My Creator Page</button>
     <button class="setup-close-btn" onclick="document.getElementById('setupOverlay').classList.remove('show')">Cancel</button>
   </div>
@@ -594,14 +598,14 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
             <div class="tc-price"><sup>₹</sup>29</div><div class="tc-name">Chai Treat</div>
             <p class="tc-desc">A small tip with a big heart. For creators who brighten your mornings.</p>
             <div class="tc-perks"><div class="tc-perk">Personal message</div><div class="tc-perk">Instant notification</div></div>
-            <button class="tc-btn" onclick="sendTreat('Chai Treat','☕',29)">Send Chai ☕</button>
+            <button class="tc-btn" onclick="go('browse',1);showToast('Select a creator to send Chai ☕')">Send Chai ☕</button>
           </div>
           <div class="treat-card tc-snack">
             <span class="tc-badge">🍕 Tier 02</span><div class="tc-emoji">🍕</div>
             <div class="tc-price"><sup>₹</sup>99</div><div class="tc-name">Snack Treat</div>
             <p class="tc-desc">Real appreciation for creators who pour hours into making content.</p>
             <div class="tc-perks"><div class="tc-perk">Personal message</div><div class="tc-perk">Shoutout eligible</div></div>
-            <button class="tc-btn" onclick="sendTreat('Snack Treat','🍕',99)">Send Snack 🍕</button>
+            <button class="tc-btn" onclick="go('browse',1);showToast('Select a creator to send Snack 🍕')">Send Snack 🍕</button>
           </div>
           <div class="treat-card tc-dinner" style="position:relative;overflow:hidden;">
             <div class="tc-ribbon">Popular</div>
@@ -609,14 +613,14 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
             <div class="tc-price"><sup>₹</sup>299</div><div class="tc-name">Dinner Treat</div>
             <p class="tc-desc">For creators who genuinely changed how you think or see the world.</p>
             <div class="tc-perks"><div class="tc-perk">Featured fan badge</div><div class="tc-perk">Priority shoutout</div><div class="tc-perk">Highlighted message</div></div>
-            <button class="tc-btn" onclick="sendTreat('Dinner Treat','🎂',299)">Send Dinner 🎂</button>
+            <button class="tc-btn" onclick="go('browse',1);showToast('Select a creator to send Dinner 🎂')">Send Dinner 🎂</button>
           </div>
           <div class="treat-card tc-ocean">
             <span class="tc-badge">💎 Tier 04</span><div class="tc-emoji">💎</div>
             <div class="tc-price"><sup>₹</sup>999</div><div class="tc-name">Ocean Treat</div>
             <p class="tc-desc">The ultimate fan move. For your all-time favourite creator.</p>
             <div class="tc-perks"><div class="tc-perk">Top Fan crown 👑</div><div class="tc-perk">Permanent badge</div><div class="tc-perk">Direct mention</div></div>
-            <button class="tc-btn" onclick="sendTreat('Ocean Treat','💎',999)">Send Ocean 💎</button>
+            <button class="tc-btn" onclick="go('browse',1);showToast('Select a creator to send Ocean 💎')">Send Ocean 💎</button>
           </div>
         </div>
       </div>
@@ -632,8 +636,8 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
             <div style="text-align:center;padding:24px;color:var(--muted);font-size:0.82rem;"><span class="spinner"></span><br><br>Loading...</div>
           </div>
           <div class="htotals">
-            <div class="hbox"><div class="hbv" id="totalSpent">₹0</div><div class="hbk">Total treats sent</div></div>
-            <div class="hbox"><div class="hbv" id="totalCreators">0</div><div class="hbk">Treats count</div></div>
+            <div class="hbox"><div class="hbv" id="totalSpent">₹0</div><div class="hbk">Total Amount Sent</div></div>
+            <div class="hbox"><div class="hbv" id="totalCreators">0</div><div class="hbk">Total Treats Sent</div></div>
           </div>
         </div>
         <div class="hist-r">
@@ -677,7 +681,7 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
           </div>
         </div>
         <div class="prof-actions-top">
-          <button class="prof-edit-btn">✏️ Edit Profile</button>
+          <button class="prof-edit-btn" onclick="openCreatorSetup()">✏️ Edit Profile</button>
           <button class="prof-signout-btn" onclick="signOut()">Sign Out</button>
         </div>
       </div>
@@ -825,6 +829,10 @@ html,body{width:100%;height:100%;font-family:'Nunito',sans-serif;}
                   <span class="page-info-label">Username</span>
                   <span class="page-info-val" id="creatorPageUsername">—</span>
                 </div>
+                <div class="page-info-field">
+                  <span class="page-info-label">Payment Link</span>
+                  <span class="page-info-val" id="creatorPagePaymentLink" style="word-break:break-all;font-size:0.72rem;">—</span>
+                </div>
                 <button class="edit-page-btn" onclick="openCreatorSetup()">✏️ Edit Creator Page</button>
               </div>
             </div>
@@ -901,13 +909,17 @@ onAuthStateChanged(auth, async (user) => {
     currentUser = user;
     document.getElementById('authOverlay').classList.add('hide');
     // Upsert user doc (no role field needed)
-    await setDoc(doc(db, 'users', user.uid), {
-      uid: user.uid,
-      name: user.displayName,
-      email: user.email,
-      photo: user.photoURL,
-      joinedAt: serverTimestamp()
-    }, { merge: true });
+    const userRef = doc(db, 'users', user.uid);
+    const userSnap = await getDoc(userRef);
+    if (!userSnap.exists()) {
+      await setDoc(userRef, {
+        uid: user.uid, name: user.displayName,
+        email: user.email, photo: user.photoURL,
+        joinedAt: serverTimestamp()
+      });
+    } else {
+      await setDoc(userRef, { name: user.displayName, email: user.email, photo: user.photoURL }, { merge: true });
+    }
     updateSidebarUI(user);
     updateProfileHero(user);
     await loadUserTreats(user.uid);
@@ -941,7 +953,7 @@ window._signOut = async () => {
 };
 
 // CREATOR SETUP
-window.openCreatorSetup = () => {
+window._openCreatorSetup = () => {
   if (!currentUser) { showToast('Please sign in first!'); return; }
   if (creatorData) {
     document.getElementById('setupName').value = creatorData.name || '';
@@ -949,6 +961,7 @@ window.openCreatorSetup = () => {
     document.getElementById('setupCategory').value = creatorData.category || '';
     document.getElementById('setupBio').value = creatorData.bio || '';
     document.getElementById('setupUpi').value = creatorData.upi || '';
+    document.getElementById('setupPaymentLink').value = creatorData.paymentLink || '';
   } else {
     document.getElementById('setupName').value = currentUser.displayName || '';
   }
@@ -961,12 +974,13 @@ window._saveCreatorProfile = async () => {
   const category = document.getElementById('setupCategory').value;
   const bio = document.getElementById('setupBio').value.trim();
   const upi = document.getElementById('setupUpi').value.trim();
+  const paymentLink = document.getElementById('setupPaymentLink').value.trim();
   if (!name || !username || !category) { showToast('Fill name, username & category!'); return; }
   const btn = document.getElementById('setupBtn');
   btn.disabled = true; btn.textContent = 'Saving...';
   try {
     await setDoc(doc(db, 'creators', currentUser.uid), {
-      uid: currentUser.uid, name, username, category, bio, upi,
+      uid: currentUser.uid, name, username, category, bio, upi, paymentLink,
       photo: currentUser.photoURL, totalEarned: 0, totalTreats: 0,
       createdAt: serverTimestamp()
     }, { merge: true });
@@ -993,6 +1007,8 @@ async function loadCreatorData(uid) {
       document.getElementById('creatorPageName').textContent = creatorData.name || '—';
       document.getElementById('creatorPageCat').textContent = creatorData.category || '—';
       document.getElementById('creatorPageUsername').textContent = '@' + (creatorData.username || '—');
+      const plEl = document.getElementById('creatorPagePaymentLink');
+      if (plEl) plEl.textContent = creatorData.paymentLink || 'Not set — add in Edit';
       document.getElementById('creatorEarned').textContent = '₹' + (creatorData.totalEarned || 0).toLocaleString('en-IN');
       document.getElementById('creatorTreatsCount').textContent = creatorData.totalTreats || 0;
       // Load treats received as creator
@@ -1180,14 +1196,8 @@ window.confirmTreat = async () => {
 
 window._sendTreat = async (name, emoji, amount) => {
   if (!currentUser) { showToast('Please sign in first!'); return; }
-  try {
-    await addDoc(collection(db, 'treats'), {
-      userId: currentUser.uid, userName: currentUser.displayName,
-      treatName: name, emoji, amount, createdAt: serverTimestamp()
-    });
-    showToast(emoji + ' ' + name + ' sent! ₹' + amount + ' 🎉');
-    await loadUserTreats(currentUser.uid);
-  } catch(e) { showToast('Something went wrong.'); }
+  showToast('Browse creators first and send a treat from their card! 🔍');
+  setTimeout(() => go('browse', 1), 1200);
 };
 
 window._sendMessage = async () => {
@@ -1212,7 +1222,10 @@ function updateSidebarUI(user) {
     av.textContent = (user.displayName||'U')[0].toUpperCase();
   }
   const joinBtn = document.getElementById('joinBtn');
-  if (joinBtn) joinBtn.textContent = `👋 Hey, ${user.displayName?.split(' ')[0] || 'User'}!`;
+  if (joinBtn) {
+    joinBtn.textContent = `👋 Hey, ${user.displayName?.split(' ')[0] || 'User'}!`;
+    joinBtn.onclick = () => go('profile', 4);
+  }
 }
 
 function updateProfileHero(user) {
@@ -1300,7 +1313,7 @@ function saveCreatorProfile() {
 }
 
 function openCreatorSetup() {
-  if (window.openCreatorSetup) window.openCreatorSetup();
+  if (window._openCreatorSetup) window._openCreatorSetup();
 }
 </script>
 </body>
